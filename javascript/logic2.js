@@ -71,7 +71,7 @@ connectionsRef.on("value", function(snap) {
       usersArray.push(childSnapshot.key); 
       }); 
 
-    database.ref("/game-stats").set({usersArray: usersArray});
+    database.ref("/gameStats").set({usersArray: usersArray});
     userCounter = usersArray.length - 1;
 
     database.ref("/connections/" + usersArray[userCounter]).set(user);
@@ -85,20 +85,6 @@ connectionsRef.on("value", function(snap) {
 
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
