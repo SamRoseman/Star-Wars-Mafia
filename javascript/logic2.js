@@ -12,13 +12,15 @@ var config = {
 // Create a variable to reference the database.
 var database = firebase.database();
 
+var usersArray = [];
+
 var user1;
 var user2;
 var user3;
 var user4;
 var user5;
 var user6;
-var userCounter = 1;
+var userCounter;
 
 //==========================================================================================
 
@@ -66,9 +68,41 @@ connectionsRef.on("value", function(snap) {
     };
     $("#user-input").val(" ");
     database.ref("/connections").on("child_added", function(childSnapshot) {
-      user1 = childSnapshot.key;
-    database.ref("/connections/" + childSnapshot.key).push(user);
+      usersArray.push(childSnapshot.key); 
       }); 
 
+    database.ref("/game-stats").set({usersArray: usersArray});
+    userCounter = usersArray.length - 1;
+
+    database.ref("/connections/" + usersArray[userCounter]).set(user);
+
+   
+    console.log(usersArray.length);
+    console.log(usersArray);
+    console.log(usersArray[userCounter]);
+
+
+
+
 })
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
