@@ -1,4 +1,3 @@
-//VARIABLES ==============================================================================
 var config = {
     apiKey: "AIzaSyD_1Jy0NGPP6bMv9WPXryV3nmWwE3WwRmM",
     authDomain: "star-wars-mafia.firebaseapp.com",
