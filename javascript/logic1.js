@@ -4,4 +4,3 @@
 		$("#byline").html("ENTER GAME")
 	},9990);
 
-

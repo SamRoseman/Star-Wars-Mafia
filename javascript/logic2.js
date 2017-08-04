@@ -1,16 +1,32 @@
-//VARIABLES ==============================================================================
-var config = {
-    apiKey: "AIzaSyD_1Jy0NGPP6bMv9WPXryV3nmWwE3WwRmM",
-    authDomain: "star-wars-mafia.firebaseapp.com",
-    databaseURL: "https://star-wars-mafia.firebaseio.com",
-    projectId: "star-wars-mafia",
-    storageBucket: "star-wars-mafia.appspot.com",
-    messagingSenderId: "471949818682"
-  };
-  firebase.initializeApp(config);
 
-// Create a variable to reference the database.
-var database = firebase.database();
+
+$(document).ready(function(){
+
+    // $("#starwars-demo").show();
+    // $("#user-name").show();
+    $("#timerArea").hide();
+    $("#questionArea").hide();
+    $("#answersTable").hide();
+
+
+setTimeout(function(){
+    $("#byline").html("ENTER GAME")
+  },9990);
+
+//VARIABLES ==============================================================================
+
+// var config = {
+//     apiKey: "AIzaSyD_1Jy0NGPP6bMv9WPXryV3nmWwE3WwRmM",
+//     authDomain: "star-wars-mafia.firebaseapp.com",
+//     databaseURL: "https://star-wars-mafia.firebaseio.com",
+//     projectId: "star-wars-mafia",
+//     storageBucket: "star-wars-mafia.appspot.com",
+//     messagingSenderId: "471949818682"
+//   };
+//   firebase.initializeApp(config);
+
+// // Create a variable to reference the database.
+// var database = firebase.database();
 
 var usersArray = [];
 
@@ -58,10 +74,14 @@ connectionsRef.on("value", function(snap) {
   $(document).on("click", function (){
     $(".starwars-demo").html("");
     $("#user-name").attr("class" , "user-name-display");
-  })
+
+    
+  });
 
 
   $(document).on("click", "#go", function (){
+    
+
     var userName = $("#user-input").val();
       var user = {
       userName: userName
@@ -81,16 +101,21 @@ connectionsRef.on("value", function(snap) {
     console.log(usersArray);
     console.log(usersArray[userCounter]);
 
+    $("#starwars-demo").hide();
+    $("#user-name").hide();
+    $("#timerArea").show();
+    $("#questionArea").show();
+    $("#answersTable").show();
 
 
 
-})
+  });
 
 
 
 
 
-
+});
 
 
 
