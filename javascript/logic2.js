@@ -29,7 +29,8 @@ setTimeout(function(){
 // var database = firebase.database();
 
 var usersArray = [];
-
+var heroArray = ["Luke" , "Leia"];
+var villainArray = ["Darth Vader", "Darth Maul"];
 var user1;
 var user2;
 var user3;
@@ -37,6 +38,7 @@ var user4;
 var user5;
 var user6;
 var userCounter;
+var user;
 
 //==========================================================================================
 
@@ -70,7 +72,7 @@ connectionsRef.on("value", function(snap) {
   $("#connected-viewers").html(snap.numChildren());
 });
 //=============================================================================================
-
+    
   $(document).on("click", function (){
     $(".starwars-demo").html("");
     $("#user-name").attr("class" , "user-name-display");
@@ -83,7 +85,7 @@ connectionsRef.on("value", function(snap) {
     
 
     var userName = $("#user-input").val();
-      var user = {
+      user = {
       userName: userName
     };
     $("#user-input").val(" ");
@@ -96,10 +98,9 @@ connectionsRef.on("value", function(snap) {
 
     database.ref("/connections/" + usersArray[userCounter]).set(user);
 
-   
-    console.log(usersArray.length);
-    console.log(usersArray);
-    console.log(usersArray[userCounter]);
+    
+
+    
 
     $("#starwars-demo").hide();
     $("#user-name").hide();
@@ -108,8 +109,10 @@ connectionsRef.on("value", function(snap) {
     $("#answersTable").show();
 
 
+    
 
   });
+
 
 
 
