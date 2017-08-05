@@ -27,15 +27,11 @@
       // Don't refresh the page!
       event.preventDefault();
 
-      
       //capture user input into global variables.
       user1Count = $("#selectUser1").val();
       user2Count = $("#selectUser2").val();
       user3Count = $("#selectUser3").val();
       		
-
-     
-     
 
       //Put new variable data into one object to make it easy to display the object properties/values in one row:
       var voteObject = {
@@ -52,11 +48,6 @@
 	  $('input[name="selectUser"]').prop('checked', false);
 
     });
-
-
-	
-
-
 
 
 	database.ref().on("child_added", function(childSnapshot) {
@@ -79,6 +70,70 @@
 	      console.log("Errors handled: " + errorObject.code);
 	    });
 
+
+
+
+
+
+
+    var user1Die = "";
+    var user2Die = "";
+    var user3Die = "";
+
+
+    $("#deadBtn").on("click", function() {
+      // Don't refresh the page!
+      event.preventDefault();
+
+      
+      //capture user input into global variables.
+      user1Die = $("#deadUser1").val();
+      user2Die = $("#deadUser2").val();
+      user3Die = $("#deadUser3").val();
+          
+
+     
+     
+
+      //Put new variable data into one object to make it easy to display the object properties/values in one row:
+      var voteDeadObject = {
+        user1Dead: user1Die,
+        user2Dead: user2Die,
+        user3Dead: user3Die
+      }
+
+      database.ref().push({
+        voteDeadObject
+      });
+
+      // Clears all of the text-boxes
+    $('input[name="deadUser"]').prop('checked', false);
+
+    });
+
+
+  
+
+
+  database.ref().on("child_added", function(childSnapshot) {
+
+    if ($('#deadUser1').is(':checked')){
+        var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteDeadObject.user1Dead);
+      $("#tDeadBody").append(tableRow);
+    }
+    else if ($('#deadUser2').is(':checked')){
+      var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteDeadObject.user2Dead);
+      $("#tDeadBody").append(tableRow);
+    }
+    else if ($('#deadUser3').is(':checked')){
+      var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteDeadObject.user3Dead);
+      $("#tDeadBody").append(tableRow);
+    }
+
+        // Handle the errors
+      }, function(errorObject) {
+        console.log("Errors handled: " + errorObject.code);
+      });
 
 
 // (function() {
