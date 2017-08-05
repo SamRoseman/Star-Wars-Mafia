@@ -2,6 +2,10 @@
 
 $(document).ready(function(){
 
+    var audio = $("audio")[0];
+    audio.play();
+
+
     // $("#starwars-demo").show();
     // $("#user-name").show();
     $("#timerArea").hide();
@@ -9,6 +13,8 @@ $(document).ready(function(){
     $("#answersTable").hide();
     $("#deadArea").hide();
     $("#deadTable").hide();
+    $("#saveArea").hide();
+    $("#saveTable").hide();
     $("#story_button").hide();
     $("#story").hide();
     $("#displayImage1").hide();
@@ -79,6 +85,7 @@ connectionsRef.on("value", function(snap) {
 //=============================================================================================
 
   $(document).on("click", function (){
+    audio.pause();
     $(".starwars-demo").html("");
     $("#user-name").attr("class" , "user-name-display");
 
@@ -115,6 +122,8 @@ connectionsRef.on("value", function(snap) {
     $("#answersTable").show();
     $("#deadArea").show();
     $("#deadTable").show();
+    $("#saveArea").show();
+    $("#saveTable").show();
     $("#story_button").show();
     $("#story").show();
     $("#displayImage1").show();
