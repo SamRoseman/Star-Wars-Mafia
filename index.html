@@ -21,7 +21,7 @@
 <div class="starwars-demo" id="starwars-demo">
     <img src="http://cssanimation.rocks/demo/starwars/images/star.svg" alt="Star" class="star">
     <img src="http://cssanimation.rocks/demo/starwars/images/wars.svg" alt="Wars" class="wars">
-    <h2 class="byline" id="byline">The Force Awakens</h2>
+    <h2 class="byline" id="byline">Mafia</h2>
   </div>
 
 
@@ -37,9 +37,26 @@
 
 
 
+
+<!--///////////////////////////////////////////////////////////-->
+
+
+<div id="story_button">
+	<h2>Select which battle story you would like to partake in:</h2>
+</div>
+<div id="story"></div>
+<div id="displayImage1"></div>
+<div id="displayImage2"></div>
+
+<br />
+
+<!--///////////////////////////////////////////////////////////-->
+
+
 <!--///////////////////////////////////////////////////////////-->
 
 <div id="timerArea">
+	<h2>When all users are ready, initiate battle by clicking "Start!"</h2>
 	<button id="startButton"> Start! </button>
 	<div id="timeRemaining">Time Remaining: </div>
 </div>
@@ -80,7 +97,7 @@
 <!--///////////////////////////////////////////////////////////-->
     
   	<div id="answersTable">
-      <h2>User Votes:</h2>
+      <h2>Your Votes:</h2>
       <table class="table">
         <thead>
           <tr>
@@ -98,9 +115,54 @@
 <!--///////////////////////////////////////////////////////////-->
 
 
+<!--///////////////////////////////////////////////////////////-->
+<div class="deadArea" id="deadArea">
+      <h2>Select who you would like to attempt to murder:</h2>
+      <form id="deadPeople" class="form-horizontal">
+        <div class="form-group">
+          <div class="radio">
+            <label>
+              <input type="radio" name="deadUser" id="deadUser1" value="Dead User 1">User 1 - Kill?</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="deadUser" id="deadUser2" value="Dead User 2">User 2 - Kill?</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="deadUser" id="deadUser3" value="Dead User 3">User 3 - Kill?</label>
+          </div>
+        </div>
+        <br />
+        
+        <div class="form-group">
+          <button type="submit" id="deadBtn" class="btn btn-primary btn-lg">Confirm Kill!</button>
+        </div>
+      </form>
+    </div>
 
+<!--///////////////////////////////////////////////////////////-->
 
-<script src="javascript/voting.js"></script>
+	<div id="deadTable">
+      <h2>Who you've chosen to perish:</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>User Selected</th>
+          </tr>
+        </thead>
+        <tbody id="tDeadBody">
+          <tr id="template" style="display: none">
+            <td data="selectUser"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+<!--///////////////////////////////////////////////////////////-->
+
+<script type="text/javascript" src="javascript/story.js"></script>
+<script type="text/javascript" src="javascript/voting.js"></script>
 
 
 </body>

@@ -7,6 +7,13 @@ $(document).ready(function(){
     $("#timerArea").hide();
     $("#questionArea").hide();
     $("#answersTable").hide();
+    $("#deadArea").hide();
+    $("#deadTable").hide();
+    $("#story_button").hide();
+    $("#story").hide();
+    $("#displayImage1").hide();
+    $("#displayImage2").hide();
+
 
 
 setTimeout(function(){
@@ -106,13 +113,15 @@ connectionsRef.on("value", function(snap) {
     $("#timerArea").show();
     $("#questionArea").show();
     $("#answersTable").show();
-
+    $("#deadArea").show();
+    $("#deadTable").show();
+    $("#story_button").show();
+    $("#story").show();
+    $("#displayImage1").show();
+    $("#displayImage2").show();
 
 
   });
-
-
-
 
 
 });
