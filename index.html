@@ -18,7 +18,12 @@
 <body>
 
 
+
 <div class="starwars-demo" id="starwars-demo">
+	<audio>
+        <source src="star-wars-theme-song.mp3"></source>
+	</audio>
+
     <img src="http://cssanimation.rocks/demo/starwars/images/star.svg" alt="Star" class="star">
     <img src="http://cssanimation.rocks/demo/starwars/images/wars.svg" alt="Wars" class="wars">
     <h2 class="byline" id="byline">Mafia</h2>
@@ -97,11 +102,11 @@
 <!--///////////////////////////////////////////////////////////-->
     
   	<div id="answersTable">
-      <h2>Your Votes:</h2>
+      <h2>Who you think the killer is:</h2>
       <table class="table">
         <thead>
           <tr>
-            <th>User Selected</th>
+            <th>Player selected per round:</th>
           </tr>
         </thead>
         <tbody id="tBody">
@@ -148,10 +153,57 @@
       <table class="table">
         <thead>
           <tr>
-            <th>User Selected</th>
+            <th>Player selected per round:</th>
           </tr>
         </thead>
         <tbody id="tDeadBody">
+          <tr id="template" style="display: none">
+            <td data="selectUser"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+<!--///////////////////////////////////////////////////////////-->
+
+
+<!--///////////////////////////////////////////////////////////-->
+<div class="saveArea" id="saveArea">
+      <h2>Select who you would like to attempt to save:</h2>
+      <form id="deadPeople" class="form-horizontal">
+        <div class="form-group">
+          <div class="radio">
+            <label>
+              <input type="radio" name="saveUser" id="saveUser1" value="Saved User 1">User 1 - Save?</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="saveUser" id="saveUser2" value="Saved User 2">User 2 - Save?</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="saveUser" id="saveUser3" value="Saved User 3">User 3 - Save?</label>
+          </div>
+        </div>
+        <br />
+        
+        <div class="form-group">
+          <button type="submit" id="saveBtn" class="btn btn-primary btn-lg">Confirm Save Selection</button>
+        </div>
+      </form>
+    </div>
+
+<!--///////////////////////////////////////////////////////////-->
+
+	<div id="saveTable">
+      <h2>Who you've chosen to perish:</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Player selected per round:</th>
+          </tr>
+        </thead>
+        <tbody id="tSaveBody">
           <tr id="template" style="display: none">
             <td data="selectUser"></td>
           </tr>
