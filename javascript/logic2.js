@@ -113,9 +113,8 @@ connectionsRef.on("value", function(snap) {
     database.ref("/connections/" + usersArray[userCounter]).set(user);
 
     
-
-    
-
+    $("#story_button").show();
+    $("#story").show();
     $("#starwars-demo").hide();
     $("#user-name").hide();
     $("#timerArea").show();
@@ -125,8 +124,7 @@ connectionsRef.on("value", function(snap) {
     $("#deadTable").show();
     $("#saveArea").show();
     $("#saveTable").show();
-    $("#story_button").show();
-    $("#story").show();
+  
     $("#displayImage1").show();
     $("#displayImage2").show();
 
