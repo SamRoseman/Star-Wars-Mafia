@@ -17,20 +17,26 @@
    
     // Get a reference to the database service
     // var database = firebase.database();
-
-    var user1Count = "";
-    var user2Count = "";
-    var user3Count = "";
-
+// ========================================================================
+    var user1Count = 0;
+    var user2Count = 0;
+    var user3Count = 0;
+      console.log(user1Count);
+      console.log(user2Count);
+      console.log(user3Count);
 
     $("#submitBtn").on("click", function() {
       // Don't refresh the page!
       event.preventDefault();
 
       //capture user input into global variables.
-      user1Count = $("#selectUser1").val();
-      user2Count = $("#selectUser2").val();
-      user3Count = $("#selectUser3").val();
+      if ($("input:checked").val() === "User 1")
+        user1Count++;
+      else if ($("input:checked").val() === "User 2")
+        user2Count++;
+      else if ($("input:checked").val() === "User 3")
+        user3Count++;
+  
       		
 
       //Put new variable data into one object to make it easy to display the object properties/values in one row:
@@ -39,8 +45,7 @@
   	    user2Data: user2Count,
   	    user3Data: user3Count
       }
-
-      database.ref().push({
+      database.ref("/gameStats/voteObject").set({
 	      voteObject
       });
 
@@ -48,8 +53,8 @@
 	  $('input[name="selectUser"]').prop('checked', false);
 
     });
-
-
+// =========================================================================
+// shows which user was selected?
 	database.ref().on("child_added", function(childSnapshot) {
 
 		if ($('#selectUser1').is(':checked')){
@@ -72,13 +77,17 @@
 
 
 
+// ========================================================================
+   
+    var user1Alive = true;
+    var user2Alive = true;
+    var user3Alive = true;
 
-
-
-
-    var user1Die = "";
-    var user2Die = "";
-    var user3Die = "";
+    var voteDeadAliveObject = {
+        user1Alive: user1Alive,
+        user2Alive: user2Alive,
+        user3Alive: user3Alive
+      }
 
 
     $("#deadBtn").on("click", function() {
@@ -87,20 +96,23 @@
 
       
       //capture user input into global variables.
-      user1Die = $("#deadUser1").val();
-      user2Die = $("#deadUser2").val();
-      user3Die = $("#deadUser3").val();
-  
+      if ($("input:checked").val() === "Dead User 1")
+        user1Alive = false;
+      else if ($("input:checked").val() === "Dead User 2")
+        user2Alive = false;
+      else if ($("input:checked").val() === "Dead User 3")
+        user3Alive = false;
 
-      //Put new variable data into one object to make it easy to display the object properties/values in one row:
-      var voteDeadObject = {
-        user1Dead: user1Die,
-        user2Dead: user2Die,
-        user3Dead: user3Die
+      voteDeadAliveObject = {
+        user1Alive: user1Alive,
+        user2Alive: user2Alive,
+        user3Alive: user3Alive
       }
+    
+   
 
-      database.ref().push({
-        voteDeadObject
+      database.ref("/gameStats/lifeStatus").set({
+        voteDeadAliveObject
       });
 
       // Clears all of the text-boxes
@@ -131,7 +143,7 @@
         console.log("Errors handled: " + errorObject.code);
       });
 
-
+// ==========================================================================
 
     var user1Save = "";
     var user2Save = "";
@@ -144,20 +156,23 @@
 
       
       //capture user input into global variables.
-      user1Save = $("#saveUser1").val();
-      user2Save = $("#saveUser2").val();
-      user3Save = $("#saveUser3").val();
+      if ($("input:checked").val() === "Saved User 1")
+        user1Alive = true;
+      else if ($("input:checked").val() === "Saved User 2")
+        user2Alive = true;
+      else if ($("input:checked").val() === "Saved User 3")
+        user3Alive = true;
+
+      voteDeadAliveObject = {
+        user1Alive: user1Alive,
+        user2Alive: user2Alive,
+        user3Alive: user3Alive
+      }
+     
   
 
-      //Put new variable data into one object to make it easy to display the object properties/values in one row:
-      var voteSaveObject = {
-        user1Saved: user1Save,
-        user2Saved: user2Save,
-        user3Saved: user3Save
-      }
-
-      database.ref().push({
-        voteSaveObject
+       database.ref("/gameStats/lifeStatus").set({
+        voteDeadAliveObject
       });
 
       // Clears all of the text-boxes
