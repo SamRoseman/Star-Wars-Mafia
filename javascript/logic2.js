@@ -42,8 +42,7 @@ setTimeout(function(){
 // var database = firebase.database();
 
 var usersArray = [];
-var heroArray = ["Luke" , "Leia"];
-var villainArray = ["Darth Vader", "Darth Maul"];
+var characterArray = ["Luke" , "Darth Vader" , "R2D2" , "C3PO" , "droid3", "droid4"];
 var user1;
 var user2;
 var user3;
@@ -51,8 +50,11 @@ var user4;
 var user5;
 var user6;
 var userCounter;
+var charCounter = 0;
 var user;
+var math;
 
+characterArray.sort(function(a, b){return 0.5 - Math.random()});
 //==========================================================================================
 
 // connectionsRef references a specific location in our database.
@@ -97,11 +99,16 @@ connectionsRef.on("value", function(snap) {
 
   $(document).on("click", "#go", function (){
     
-
+    var char = characterArray.sort(function(a, b){return 0.5 - Math.random()});
+    console.log(char);
+    console.log(userCounter);
     var userName = $("#user-input").val();
-      user = {
-      userName: userName
+    
+    user = {
+    userName: userName ,
+    character: char[charCounter]
     };
+   
     $("#user-input").val(" ");
     database.ref("/connections").on("child_added", function(childSnapshot) {
       usersArray.push(childSnapshot.key); 
@@ -111,7 +118,7 @@ connectionsRef.on("value", function(snap) {
     userCounter = usersArray.length - 1;
 
     database.ref("/connections/" + usersArray[userCounter]).set(user);
-
+    charCounter++;
     
     $("#story_button").show();
     $("#story").show();
