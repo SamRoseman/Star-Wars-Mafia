@@ -61,7 +61,6 @@ var buttons = ["A New Hope", "The Empire Strikes Back", "Return of the Jedi", "T
 
 
 
-var usersArray = [];
 var characterArray = ["hero" , "villain" , "droid1" , "droid2" , "droid3", "droid4"];
 var user1;
 var user2;
@@ -69,12 +68,11 @@ var user3;
 var user4;
 var user5;
 var user6;
-var userCounter;
-var charCounter = 0;
+var charCounter;
 var user;
-var math;
+var userCon;
+var char;
 
-characterArray.sort(function(a, b){return 0.5 - Math.random()});
 //==========================================================================================
 
 // connectionsRef references a specific location in our database.
@@ -96,11 +94,15 @@ connectedRef.on("value", function(snap) {
     var con = connectionsRef.push(true);
     // Remove user from the connection list when they disconnect.
     con.onDisconnect().remove();
+    console.log(con.key);
+    userCon = con.key;
   }
 });
 
+
 // When first loaded or when the connections list changes...
 connectionsRef.on("value", function(snap) {
+
 
   // Display the viewer count in the html.
   // The number of online users is the number of children in the connections list.
@@ -117,52 +119,134 @@ connectionsRef.on("value", function(snap) {
   });
 
 
+database.ref("/connections").once("value", function(snappyCharArray) {
+    char = characterArray.sort(function(a, b){return 0.5 - Math.random()});
+
+    if (snappyCharArray.numChildren() === 1) {
+        database.ref("/gameStats/characterArray").set(char);
+    }
+    console.log(snappyCharArray.numChildren());
+
+  }); 
+
+
+
+
+database.ref("/connections").on("child_added", function(childSnapshot) {
+ 
+
+  }); 
+
+
+
+ 
+  // database.ref("/gameStats/characterArray").set(char);
+
   $(document).on("click", "#go", function (){
-    
-    var char = characterArray.sort(function(a, b){return 0.5 - Math.random()});
-    console.log(char);
-    console.log(userCounter);
-    var userName = $("#user-input").val();
-    
-    user = {
-    userName: userName ,
-    character: char[charCounter]
-    };
-   
-    $("#user-input").val(" ");
-    database.ref("/connections").on("child_added", function(childSnapshot) {
-      usersArray.push(childSnapshot.key); 
-      }); 
 
-    database.ref("/gameStats").set({usersArray: usersArray});
-    userCounter = usersArray.length - 1;
-
-    database.ref("/connections/" + usersArray[userCounter]).set(user);
-    charCounter++;
-    
     $("#story_button").show();
     $("#story").show();
     $("#starwars-demo").hide();
     $("#user-name").hide();
     $("#timerArea").show();
-    $("#questionArea").show();
-    $("#answersTable").show();
-    $("#deadArea").show();
-    $("#deadTable").show();
-    $("#saveArea").show();
-    $("#saveTable").show();
-  
     $("#displayImage1").show();
     $("#displayImage2").show();
 
+   
+  
+   
+    // database.ref("/gameStats/characterCounter").set(charCounter);
     
+    
+    
+
+    database.ref("/gameStats/characterArray").once("value", function(anotherSnappy){
+      var userName = $("#user-input").val();
+      var splicey = anotherSnappy.val();
+    
+      user = {
+      userName: userName,
+      character: splicey[0]
+      };
+
+
+      
+      console.log(splicey);
+      splicey.splice(0, 1);
+      database.ref("/gameStats/characterArray").set(splicey);
+    });
+    
+
+    // database.ref().child("/connections/" + userCon).once("value", function(snappyRemove){
+    //     console.log(snappyRemove.val().character);
+    //     var snappyRemoveCharVal = snappyRemove.val().character;
+
+    //     if (snappyRemoveCharVal === "villian"){
+    //       snappyRemoveCharVal.remove();
+    //     }
+    //     if (snappyRemoveCharVal === "hero"){
+    //       snappyRemoveCharVal.remove();
+    //     }
+    //     if (snappyRemoveCharVal === "droid1"){
+    //       snappyRemoveCharVal.remove();
+    //     }
+    //     if (snappyRemoveCharVal === "droid2"){
+    //       snappyRemoveCharVal.remove();
+    //     }
+    //     if (snappyRemoveCharVal === "droid3"){
+    //       snappyRemoveCharVal.remove();
+    //     }
+    //     if (snappyRemoveCharVal === "droid4"){
+    //       snappyRemoveCharVal.remove();
+    //     }
+    //   });
+  
+
+    database.ref("/connections/" + userCon).set(user);
+    
+ 
+
 
   });
 
 
+  database.ref("/connections").on("value", function(snap){
+    // var rootRef = snap.val();
 
-});
 
+    if (snap.numChildren() === 6) {
+      //hide wait screens
+      $("#story_button").hide();
+      $("#story").hide();
+      $("#displayImage1").hide();
+      $("#displayImage2").hide();
+
+      // console.log(snap.child("connections/character").val());
+      database.ref().child("/connections/" + userCon).once("value", function(snappy){
+        console.log(snappy.val().character);
+        var snappyCharVal = snappy.val().character;
+     
+
+       
+          if (snappyCharVal === "villain"){
+                $("#deadArea").show();
+                $("#deadTable").show();
+            }
+            else if (snappyCharVal === "hero"){
+                $("#saveArea").show();
+                $("#saveTable").show();
+                // $("#questionArea").show();
+                // $("#answersTable").show();
+            }
+            else if (snappyCharVal === "droid1"){
+                $("displayWaiting").html("WAITING!");
+            }
+
+      
+        });
+      //show roles (all the if statements)
+    }
+  });
 
 
 
@@ -173,11 +257,11 @@ function displayStory() {
   $("#displayArea").html("");
 
   var index = $(this).attr("data-name");
-  console.log("Button click displays index " + index);
+  // console.log("Button click displays index " + index);
 
   //-----url that will be called-----//
   var queryURL1 = "https://swapi.co/api/films/" + index + "?format=json";
-  console.log(queryURL1);
+  // console.log(queryURL1);
 
   var queryURL2 = "https://api.giphy.com/v1/gifs/" + goodGuys[index] + "?api_key=24a1780a82694e2f91abe2751c4b3e4d";
   var queryURL3 = "https://api.giphy.com/v1/gifs/" + badGuys[index] + "?api_key=24a1780a82694e2f91abe2751c4b3e4d";
@@ -190,13 +274,13 @@ function displayStory() {
   }).done(function(response) {
 
       var episode = response.episode_id;
-      console.log("Episode #: " + episode);
+      // console.log("Episode #: " + episode);
 
       var title = response.title;
-      console.log("Title: " + title);
+      // console.log("Title: " + title);
 
       var intro = response.opening_crawl;
-      console.log("Intro: " + intro);
+      // console.log("Intro: " + intro);
 
       //$("#story_button").empty();
 
@@ -230,6 +314,17 @@ function displayStory() {
         $("#displayImage2").html(badGuysImage);
       });
 
+  $.ajax({
+      url: queryURL4,
+      method: "GET"
+      })
+      // After the data from the AJAX request comes back
+      .done(function(response) {
+        var imageUrl = response.data.images.fixed_height_still.url;
+        var goodGuysImage = $("<img>");
+        goodGuysImage.attr("src", imageUrl);
+        $("#displayImage1").html(goodGuysImage);
+      });
 
 
 }
@@ -265,3 +360,4 @@ $(document).on("click", ".button", displayStory);
 
 
 
+});
