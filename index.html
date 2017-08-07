@@ -10,15 +10,27 @@
  <link rel="stylesheet" href="style1.css">
  <script type="text/javascript" src="logic1.js"></script>
  <script type="text/javascript" src="logic2.js"></script>
+ <link rel="stylesheet" href="css/style1.css">
+ <!-- <script type="text/javascript" src="javascript/logic1.js"></script> -->
+ <script type="text/javascript" src="javascript/initialize.js"></script>
+ <script type="text/javascript" src="javascript/logic2.js"></script>
+ <script type="text/javascript" src="javascript/timer.js"></script>
+ <script type="text/javascript" src="javascript/assignChar.js"></script>
 
+ 
 </head>
 <body>
 
 
-<div class="starwars-demo">
+
+<div class="starwars-demo" id="starwars-demo">
+	<audio>
+        <source src="star-wars-theme-song.mp3"></source>
+	</audio>
+
     <img src="http://cssanimation.rocks/demo/starwars/images/star.svg" alt="Star" class="star">
     <img src="http://cssanimation.rocks/demo/starwars/images/wars.svg" alt="Wars" class="wars">
-    <h2 class="byline" id="byline">The Force Awakens</h2>
+    <h2 class="byline" id="byline">Mafia</h2>
   </div>
 
 
@@ -36,6 +48,182 @@
   <div id = "story"></div>
 
  <script type="text/javascript" src="story.js"></script>
+
+
+
+<!--///////////////////////////////////////////////////////////-->
+
+
+<div id="story_button">
+	<h2>Select which battle story you would like to partake in:</h2>
+</div>
+<div id="story"></div>
+<div id="displayImage1"></div>
+<div id="displayImage2"></div>
+
+<br />
+
+<!--///////////////////////////////////////////////////////////-->
+
+
+<!--///////////////////////////////////////////////////////////-->
+
+<div id="timerArea">
+	<h2>When all users are ready, initiate battle by clicking "Start!"</h2>
+	<button id="startButton"> Start! </button>
+	<div id="timeRemaining">Time Remaining: </div>
+</div>
+
+<!--///////////////////////////////////////////////////////////-->
+
+
+<!--///////////////////////////////////////////////////////////-->
+
+    <div class="questionArea" id="questionArea">
+      <h2>Select who you think the killer is:</h2>
+      <form id="question" class="form-horizontal">
+        <div class="form-group">
+          <div class="radio">
+            <label>
+              <input type="radio" name="selectUser" id="selectUser1" value="User 1">User 1</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="selectUser" id="selectUser2" value="User 2">User 2</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="selectUser" id="selectUser3" value="User 3">User 3</label>
+          </div>
+        </div>
+        <br />
+        
+        <div class="form-group">
+          <button type="submit" id="submitBtn" class="btn btn-primary btn-lg">Submit</button>
+        </div>
+      </form>
+    </div>
+    
+<!--///////////////////////////////////////////////////////////-->
+
+
+<!--///////////////////////////////////////////////////////////-->
+    
+  	<div id="answersTable">
+      <h2>Who you think the killer is:</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Player selected per round:</th>
+          </tr>
+        </thead>
+        <tbody id="tBody">
+          <tr id="template" style="display: none">
+            <td data="selectUser"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+<!--///////////////////////////////////////////////////////////-->
+
+
+<!--///////////////////////////////////////////////////////////-->
+<div class="deadArea" id="deadArea">
+      <h2>Select who you would like to attempt to murder:</h2>
+      <form id="deadPeople" class="form-horizontal">
+        <div class="form-group">
+          <div class="radio">
+            <label>
+              <input type="radio" name="deadUser" id="deadUser1" value="Dead User 1">User 1 - Kill?</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="deadUser" id="deadUser2" value="Dead User 2">User 2 - Kill?</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="deadUser" id="deadUser3" value="Dead User 3">User 3 - Kill?</label>
+          </div>
+        </div>
+        <br />
+        
+        <div class="form-group">
+          <button type="submit" id="deadBtn" class="btn btn-primary btn-lg">Confirm Kill!</button>
+        </div>
+      </form>
+    </div>
+
+<!--///////////////////////////////////////////////////////////-->
+
+	<div id="deadTable">
+      <h2>Who you've chosen to perish:</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Player selected per round:</th>
+          </tr>
+        </thead>
+        <tbody id="tDeadBody">
+          <tr id="template" style="display: none">
+            <td data="selectUser"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+<!--///////////////////////////////////////////////////////////-->
+
+
+<!--///////////////////////////////////////////////////////////-->
+<div class="saveArea" id="saveArea">
+      <h2>Select who you would like to attempt to save:</h2>
+      <form id="deadPeople" class="form-horizontal">
+        <div class="form-group">
+          <div class="radio">
+            <label>
+              <input type="radio" name="saveUser" id="saveUser1" value="Saved User 1">User 1 - Save?</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="saveUser" id="saveUser2" value="Saved User 2">User 2 - Save?</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="saveUser" id="saveUser3" value="Saved User 3">User 3 - Save?</label>
+          </div>
+        </div>
+        <br />
+        
+        <div class="form-group">
+          <button type="submit" id="saveBtn" class="btn btn-primary btn-lg">Confirm Save Selection</button>
+        </div>
+      </form>
+    </div>
+
+<!--///////////////////////////////////////////////////////////-->
+
+	<div id="saveTable">
+      <h2>Who you've chosen to perish:</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Player selected per round:</th>
+          </tr>
+        </thead>
+        <tbody id="tSaveBody">
+          <tr id="template" style="display: none">
+            <td data="selectUser"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+<!--///////////////////////////////////////////////////////////-->
+
+<script type="text/javascript" src="javascript/story.js"></script>
+<script type="text/javascript" src="javascript/voting.js"></script>
+
 
 </body>
 </html>

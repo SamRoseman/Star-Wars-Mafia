@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Star Wars Mafia</title>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+
+ <link rel="stylesheet" href="style1.css">
+ <script type="text/javascript" src="logic1.js"></script>
+ <script type="text/javascript" src="logic2.js"></script>
+ <script type="text/javascript" src="timer.js"></script>
+ 
+
+</head>
+<body>
+
+
+<div class="starwars-demo">
+    <img src="http://cssanimation.rocks/demo/starwars/images/star.svg" alt="Star" class="star">
+    <img src="http://cssanimation.rocks/demo/starwars/images/wars.svg" alt="Wars" class="wars">
+    <h2 class="byline" id="byline">The Force Awakens</h2>
+  </div>
+
+
+
+<div class="user-name-nodisplay" id="user-name">
+
+	<div><label for="user-input">Enter your name</label></div>
+	<input type="text" id="user-input">  
+	<input id="go" type="submit" value="GO!">
+	<h6> <span id="connected-viewers"></span> people have entered</h6>	
+
+</div>
+
+
+
+<div id="timerArea">
+	<button id="startButton"> Start! </button>
+	<div id="timeRemaining">Time Remaining: </div>
+</div>
+
+
+<!--///////////////////////////////////////////////////////////-->
+
+
+    <div class="questionArea">
+      <h2>Select who you think the killer is:</h2>
+      <form id="question" class="form-horizontal">
+        <div class="form-group">
+          <div class="radio">
+            <label>
+              <input type="radio" name="selectUser" id="selectUser1" value="User 1">User 1</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="selectUser" id="selectUser2" value="User 2">User 2</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="selectUser" id="selectUser3" value="User 3">User 3</label>
+          </div>
+        </div>
+        <br />
+        
+        <div class="form-group">
+          <button type="submit" id="submitBtn" class="btn btn-primary btn-lg">Submit</button>
+        </div>
+      </form>
+    </div>
+    
+
+<!--///////////////////////////////////////////////////////////-->
+
+
+<!--///////////////////////////////////////////////////////////-->
+    
+  	<div id="answersTable">
+      <h2>User Votes:</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>User Selected</th>
+          </tr>
+        </thead>
+        <tbody id="tBody">
+          <tr id="template" style="display: none">
+            <td data="selectUser"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+<!--///////////////////////////////////////////////////////////-->
+
+
+
+<script src="voting.js"></script>
+
+
+</body>
+</html>
