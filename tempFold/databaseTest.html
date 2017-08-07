@@ -7,18 +7,96 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
 
- 
  <link rel="stylesheet" href="css/style1.css">
  <!-- <script type="text/javascript" src="javascript/logic1.js"></script> -->
  <script type="text/javascript" src="javascript/initialize.js"></script>
  <script type="text/javascript" src="javascript/logic2.js"></script>
  <script type="text/javascript" src="javascript/timer.js"></script>
- <script type="text/javascript" src="javascript/assignChar.js"></script>
+ <script type="text/javascript" src="javascript/points.js"></script>
 
  
+
 </head>
 <body>
 
+
+<script type="text/javascript">
+  var config = {
+    apiKey: "AIzaSyBxQPkD3yzLNOEdopwKPMr68Ct1l733orM",
+    authDomain: "in-class-demo-d3edb.firebaseapp.com",
+    databaseURL: "https://in-class-demo-d3edb.firebaseio.com",
+    projectId: "in-class-demo-d3edb",
+    storageBucket: "in-class-demo-d3edb.appspot.com",
+    messagingSenderId: "334579284127"
+  };
+  firebase.initializeApp(config);
+
+// Create a variable to reference the database.
+var database = firebase.database();
+
+
+//VARIABLES ==============================================================================
+
+// var config = {
+//     apiKey: "AIzaSyD_1Jy0NGPP6bMv9WPXryV3nmWwE3WwRmM",
+//     authDomain: "star-wars-mafia.firebaseapp.com",
+//     databaseURL: "https://star-wars-mafia.firebaseio.com",
+//     projectId: "star-wars-mafia",
+//     storageBucket: "star-wars-mafia.appspot.com",
+//     messagingSenderId: "471949818682"
+//   };
+//   firebase.initializeApp(config);
+
+// // Create a variable to reference the database.
+// var database = firebase.database();
+
+var usersArray = [];
+
+var user1;
+var user2;
+var user3;
+var user4;
+var user5;
+var user6;
+var userCounter;
+
+//==========================================================================================
+
+// connectionsRef references a specific location in our database.
+// All of our connections will be stored in this directory.
+var connectionsRef = database.ref("/connections");
+
+// '.info/connected' is a special location provided by Firebase that is updated
+// every time the client's connection state changes.
+// '.info/connected' is a boolean value, true if the client is connected and false if they are not.
+var connectedRef = database.ref(".info/connected");
+
+// When the client's connection state changes...
+connectedRef.on("value", function(snap) {
+
+  // If they are connected..
+  if (snap.val()) {
+
+    // Add user to the connections list.
+    var con = connectionsRef.push(true);
+    // Remove user from the connection list when they disconnect.
+    con.onDisconnect().remove();
+  }
+});
+
+// When first loaded or when the connections list changes...
+connectionsRef.on("value", function(snap) {
+
+  // Display the viewer count in the html.
+  // The number of online users is the number of children in the connections list.
+  $("#connected-viewers").html(snap.numChildren());
+});
+//=============================================================================================
+
+
+
+
+</script>
 
 
 <div class="starwars-demo" id="starwars-demo">
@@ -42,12 +120,22 @@
 
 </div>
 
-  <div id = "story_button"></div>
-  <div id = "story"></div>
-
- <script type="text/javascript" src="story.js"></script>
 
 
+
+<!--///////////////////////////////////////////////////////////-->
+
+
+<div id="story_button">
+	<h2>Select which battle story you would like to partake in:</h2>
+</div>
+<div id="story"></div>
+<div id="displayImage1"></div>
+<div id="displayImage2"></div>
+
+<br />
+
+<!--///////////////////////////////////////////////////////////-->
 
 
 <!--///////////////////////////////////////////////////////////-->
@@ -58,7 +146,19 @@
 	<div id="timeRemaining">Time Remaining: </div>
 </div>
 
+<br / >
+
 <!--///////////////////////////////////////////////////////////-->
+
+
+
+    <div id="timeDisplayTest">
+      <button id="testButton"> Start Test! </button>
+      <h2 id="timeRemainingTest">Time Remaining Test: </h2>
+      <h2 id="totalRight">Total right: </h2>
+      <h2 id="totalWrong">Total wrong: </h2>
+    </div>
+
 
 
 <!--///////////////////////////////////////////////////////////-->
@@ -69,15 +169,15 @@
         <div class="form-group">
           <div class="radio">
             <label>
-              <input type="radio" name="selectUser" id="selectUser1" value="User 1">User 1</label>
+              <input type="radio" name="selectUser" class="right" id="selectUser1" value="User 1">User 1</label>
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="selectUser" id="selectUser2" value="User 2">User 2</label>
+              <input type="radio" name="selectUser" class="wrong1" id="selectUser2" value="User 2">User 2</label>
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="selectUser" id="selectUser3" value="User 3">User 3</label>
+              <input type="radio" name="selectUser" class="wrong2" id="selectUser3" value="User 3">User 3</label>
           </div>
         </div>
         <br />
@@ -187,8 +287,8 @@
 
 <!--///////////////////////////////////////////////////////////-->
 
-	<div id="saveTable">
-      <h2>Who you've chosen to perish:</h2>
+	  <div id="saveTable">
+      <h2>Who you've chosen to save:</h2>
       <table class="table">
         <thead>
           <tr>
@@ -203,9 +303,14 @@
       </table>
     </div>
 
+
+<!--//////////////////////////////////////////////////////-->
+
+ 
 <!--///////////////////////////////////////////////////////////-->
 
 
+<script type="text/javascript" src="javascript/story.js"></script>
 <script type="text/javascript" src="javascript/voting.js"></script>
 
 
