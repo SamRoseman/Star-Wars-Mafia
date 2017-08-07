@@ -1,4 +1,3 @@
-
 var placeholder1 = "whatever";
 var quiGonID = "WJdNmeAxkpZIc";
 var yodaID = "zQhFEBrX6plKg";
@@ -121,6 +120,4 @@ renderButtons();
 
 //==========when child element(.gif-button) in document is clicked, run function==========//
 $(document).on("click", ".button", displayStory);
-
-
 
