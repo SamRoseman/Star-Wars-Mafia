@@ -101,6 +101,7 @@
 
 body {
   background: #000 url(http://cssanimation.rocks/demo/starwars/images/bg.jpg);
+  font-family: 'Saira Extra Condensed', sans-serif;
   color: white;
   text-align: center;
   margin: 15px;
@@ -110,9 +111,6 @@ body {
   display: inline-block;
 }
 
-img {
-  width: 100%;
-}
 
 .star, .wars, .byline {
   position: absolute;
@@ -120,16 +118,17 @@ img {
 
 .star {
   top: -0.75em;
+  width: 100%;
 }
 
 .wars {
   bottom: -0.5em;
+  width: 100%;
 }
 
 .byline,
 #user-name {
   color: #fff;
-  font-family: "ITC Serif Gothic", Lato, sans-serif;
   font-size: 2.25em;
   left: -2em;
   letter-spacing: 0.4em;
@@ -146,7 +145,7 @@ img {
 .user-name-display {
   margin: 100px;
   color: #fff;
-  font-family: "ITC Serif Gothic", Lato, sans-serif;
+  font-family: 'Saira Extra Condensed', sans-serif;
   font-size: 40px;
   text-align: center;
   text-transform: uppercase;
@@ -154,21 +153,47 @@ img {
 }
 label {
   color: white;
+  font-family: 'Saira Extra Condensed', sans-serif;
   font-size: 25px;
 }
 
-button {
+button,
+#go {
+  font-family: 'Saira Extra Condensed', sans-serif;
   color: white;
-  font-size: 30px;
+  background-color: #14679E;
+  font-size: 50px;
   margin: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+}
+button:hover,
+#go:hover,
+.button:hover {
+  background-color: #11507a;
 }
 
 .button {
+  font-family: 'Saira Extra Condensed', sans-serif;
   color: white;
-  margin: 10px;
+  font-size: 20px;
+  margin: 5px;
 
 }
 
+h1 {
+  font-family: 'Saira Extra Condensed', sans-serif;
+  color: white;
+}
+
+p {
+  font-family: 'Saira Extra Condensed', sans-serif;
+  color: white; 
+  font-size: 20px; 
+  text-align: justify;
+
+}
 
 
 /*** Media queries for adjusting to different screen sizes ***/

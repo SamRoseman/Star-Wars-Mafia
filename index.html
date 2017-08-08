@@ -10,9 +10,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.1/css/foundation.min.css" integrity="" crossorigin="anonymous" />
 <!-- Compressed JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.1/js/foundation.min.js" integrity="" crossorigin="anonymous"></script>
+
+<link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
  
  <link rel="stylesheet" href="css/style1.css">
- <!-- <script type="text/javascript" src="javascript/logic1.js"></script> -->
+ 
  <script type="text/javascript" src="javascript/initialize.js"></script>
  <script type="text/javascript" src="javascript/logic2.js"></script>
  <script type="text/javascript" src="javascript/timer.js"></script>
@@ -36,12 +38,18 @@
 
 
 
-<div class="user-name-nodisplay grid-container" id="user-name">
+<div class="user-name-nodisplay" id="user-name">
   <div class="grid-x">
-    <label class="cell userNameCap" for="user-input">Enter your name</label>
-    <input class="cell userNameCap" type="text" id="user-input">  
-    <input class="cell userNameCap" id="go" type="submit" value="GO!">
-    <h6 class="cell userNameCap"> <span id="connected-viewers"></span> people have entered</h6>	
+    <div class="cell">
+      <label class="userNameCap" for="user-input">Enter your name</label>
+      <input class="userNameCap" type="text" id="user-input">  
+    </div>
+
+    <div class="cell">
+      <input class="userNameCap" id="go" type="submit" value="GO!">
+    </div>
+   
+    <h1 class="cell userNameCap"> <span id="connected-viewers"></span> people have entered</h1>	
   </div>
 </div>
 
@@ -56,22 +64,17 @@
 
 
 
-
 <!--///////////////////////////////////////////////////////////-->
 
-<div id="timerArea">
-	<h2 class="cell">When all users are ready, initiate battle by clicking "Start!"</h2>
 
-	<button  id="startButton"> Start! </button>
-	<div  id="timeRemaining">Time Remaining: </div>
-=======
 
 <div id="startTimer">
-	<h2>When 6 Users have logged on, click START to begin!  BE READY!</h2>
+	<h1>When 6 Users have logged on, click START to begin!  BE READY!</h1>
 	<button id="startButton"> Start! </button>
-
 </div>
-	<div id="timeRemaining"><h1>Time Remaining: </h1></div>
+<div id="timeRemaining">
+  <h1>Time Remaining: </h1>
+</div>
 
 <!--///////////////////////////////////////////////////////////-->
 
