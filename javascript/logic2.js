@@ -32,7 +32,8 @@ setTimeout(function(){
 //VARIABLES ==============================================================================
 var startGame = false;
 
-var startGameObject;
+var startGameObject = {startGame: startGame}
+
 
 var placeholder1 = "whatever";
 var quiGonID = "WJdNmeAxkpZIc";
@@ -74,6 +75,10 @@ var charCounter;
 var user;
 var userCon;
 var char;
+
+
+var snappyName;
+
 
 //==========================================================================================
 
@@ -191,14 +196,15 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
       // console.log(snap.child("connections/character").val());
       database.ref().child("/connections/" + userCon).once("value", function(snappy){
         console.log(snappy.val().character);
+        console.log(snappy.val().userName);        
         var snappyCharVal = snappy.val().character;
-     
+        snappyName = snappy.val().userName;
+
         database.ref("/gameStats/startGameObject/").set(startGameObject);
 
 
         $("#startButton").on('click', function(){
 
-          $("#questionArea").show();
           $("#story_button").hide();
           $("#story").hide();
           $("#startTimer").hide();
@@ -242,7 +248,7 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
           $("#resultsPlaceholder").hide();
           $("#pleaseWait").show();
 
-          var countDown = 21;
+          var countDown = 10;
           
           var interval = setInterval(function() { 
             countDown--;
@@ -315,17 +321,17 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
 
 
 
-          var countDown = 41;
+          var countDown = 10;
           var interval = setInterval(function() { 
             countDown--;
             $("#timeRemaining").html("<h1>Time Remaining: " + countDown + "</h1>");
-            $("#resultsPlaceholder").html("<h1>This is placeholder text to for results screen.</h1>" + "<p><h1>Vote below who you think the killer is: </h1></p>");
 
             $("#questionArea").show();
 
            
             if (countDown == 0) {
-              startTimer();
+              //startTimer();
+              displayVotes();
               clearInterval(interval);
 
             }
@@ -439,5 +445,252 @@ renderButtons();
 //==========when child element(.gif-button) in document is clicked, run function==========//
 $(document).on("click", ".button", displayStory);
 
+//=======================================================//
+//=========================VOTING========================//
+//=======================================================//
+
+    var user1Count = 0;
+    var user2Count = 0;
+    var user3Count = 0;
+    var user4Count = 0;
+    var user5Count = 0;
+    var user6Count = 0;
+
+    var voteObject = {
+      user1Data: user1Count,
+      user2Data: user2Count,
+      user3Data: user3Count,
+      user4Data: user4Count,
+      user5Data: user5Count,
+      user6Data: user6Count
+    }
+
+    database.ref("/gameStats/voteObject").set({ 
+      voteObject
+    });
+
+    $("#submitBtn").on("click", function() {
+      // Don't refresh the page!
+      event.preventDefault();
+
+      database.ref("/gameStats/voteObject").on("value", function(snapVote) {
+        var newCount1 = snapVote.val().voteObject.user1Data;
+        var newCount2 = snapVote.val().voteObject.user2Data;
+        var newCount3 = snapVote.val().voteObject.user3Data;
+        var newCount4 = snapVote.val().voteObject.user4Data;
+        var newCount5 = snapVote.val().voteObject.user5Data;
+        var newCount6 = snapVote.val().voteObject.user6Data;
+
+
+      //capture user input into global variables.
+      if ($("input:checked").val() === "User 1")
+        newCount1++;
+      else if ($("input:checked").val() === "User 2")
+        newCount2++;
+      else if ($("input:checked").val() === "User 3")
+        newCount3++;
+      else if ($("input:checked").val() === "User 4")  
+        newCount4++; 
+      else if ($("input:checked").val() === "User 5")
+        newCount5++;
+      else if ($("input:checked").val() === "User 6")
+        newCount6++;
+
+      //Put new variable data into one object to make it easy to display the object properties/values in one row:
+    voteObject = {
+      user1Data: newCount1,
+      user2Data: newCount2,
+      user3Data: newCount3,
+      user4Data: newCount4,
+      user5Data: newCount5,
+      user6Data: newCount6
+    }
+
+
+    });
+
+      database.ref("/gameStats/voteObject").set({
+        voteObject
+      });
+
+      // Clears all of the text-boxes
+    //$('input[name="selectUser"]').prop('checked', false);
+    $("#questionArea").hide();
+  });
+
+// =========================================================================
+// shows which user was selected?
+  database.ref().on("child_added", function(childSnapshot) {
+
+    if ($('#selectUser1').is(':checked')){
+        var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteObject.user1Data);
+      $("#tBody").append(tableRow);
+    }
+    else if ($('#selectUser2').is(':checked')){
+      var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteObject.user2Data);
+      $("#tBody").append(tableRow);
+    }
+    else if ($('#selectUser3').is(':checked')){
+      var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteObject.user3Data);
+      $("#tBody").append(tableRow);
+    }
+
+        // Handle the errors
+      }, function(errorObject) {
+        console.log("Errors handled: " + errorObject.code);
+      });
+
+
+
+// ========================================================================
+   
+    var user1Alive = true;
+    var user2Alive = true;
+    var user3Alive = true;
+
+    var voteDeadAliveObject = {
+        user1Alive: user1Alive,
+        user2Alive: user2Alive,
+        user3Alive: user3Alive
+      }
+
+
+    $("#deadBtn").on("click", function() {
+      // Don't refresh the page!
+      event.preventDefault();
+
+      
+      //capture user input into global variables.
+      if ($("input:checked").val() === "Dead User 1")
+        user1Alive = false;
+      else if ($("input:checked").val() === "Dead User 2")
+        user2Alive = false;
+      else if ($("input:checked").val() === "Dead User 3")
+        user3Alive = false;
+
+      voteDeadAliveObject = {
+        user1Alive: user1Alive,
+        user2Alive: user2Alive,
+        user3Alive: user3Alive
+      }
+    
+   
+
+      database.ref("/gameStats/lifeStatus").set({
+        voteDeadAliveObject
+      });
+
+      // Clears all of the text-boxes
+    $('input[name="deadUser"]').prop('checked', false);
+    $("#deadArea").hide();
+    });
+
+
+  
+
+  database.ref().on("child_added", function(childSnapshot) {
+
+    if ($('#deadUser1').is(':checked')){
+        var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteDeadObject.user1Dead);
+      $("#tDeadBody").append(tableRow);
+    }
+    else if ($('#deadUser2').is(':checked')){
+      var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteDeadObject.user2Dead);
+      $("#tDeadBody").append(tableRow);
+    }
+    else if ($('#deadUser3').is(':checked')){
+      var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteDeadObject.user3Dead);
+      $("#tDeadBody").append(tableRow);
+    }
+
+        // Handle the errors
+      }, function(errorObject) {
+        console.log("Errors handled: " + errorObject.code);
+      });
+
+// ==========================================================================
+
+
+
+    $("#saveBtn").on("click", function() {
+      // Don't refresh the page!
+      event.preventDefault();
+
+      
+      //capture user input into global variables.
+      if ($("input:checked").val() === "Saved User 1")
+        user1Alive = true;
+      else if ($("input:checked").val() === "Saved User 2")
+        user2Alive = true;
+      else if ($("input:checked").val() === "Saved User 3")
+        user3Alive = true;
+
+      voteDeadAliveObject = {
+        user1Alive: user1Alive,
+        user2Alive: user2Alive,
+        user3Alive: user3Alive
+      }
+     
+  
+
+       database.ref("/gameStats/lifeStatus").set({
+        voteDeadAliveObject
+      });
+
+      // Clears all of the text-boxes
+    $('input[name="saveUser"]').prop('checked', false);
+
+    });
+
+
+  
+
+  database.ref().on("child_added", function(childSnapshot) {
+
+    if ($('#saveUser1').is(':checked')){
+        var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteSaveObject.user1Saved);
+      $("#tSaveBody").append(tableRow);
+    }
+    else if ($('#saveUser2').is(':checked')){
+      var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteSaveObject.user2Saved);
+      $("#tSaveBody").append(tableRow);
+    }
+    else if ($('#saveUser3').is(':checked')){
+      var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteSaveObject.user3Saved);
+      $("#tSaveBody").append(tableRow);
+    }
+
+        // Handle the errors
+      }, function(errorObject) {
+        console.log("Errors handled: " + errorObject.code);
+      });
+
+
+
+    // database.ref("/connections/" + userCon).once("value", function(playerSnap){
+
+    //   var playerChar = playerSnap.val().character;
+    //   console.log(playerChar);
+
+    // });  
+
+function displayVotes() {
+  database.ref("/gameStats/voteObject/voteObject").on("value", function(snapResult) {
+    console.log(snapResult.val().user1Data);
+    $("#resultsPlaceholder").show();
+    $("#resultsPlaceholder").html("<p>This is " + userName + "'s' votes: " + snapResult.val().user1Data + "</p>" + 
+                                    "<p> This is User 2: " + snapResult.val().user2Data + "</p>" + 
+                                    "<p> This is User 3: " + snapResult.val().user3Data + "</p>" + 
+                                    "<p> This is User 4: " + snapResult.val().user4Data + "</p>" +
+                                    "<p> This is User 5: " + snapResult.val().user5Data + "</p>" +
+                                    "<p> This is User 6: " + snapResult.val().user6Data + "</p>");
+
+  });
+
+}
+
 
 });
+
+
+
