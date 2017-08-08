@@ -21,6 +21,7 @@ $(document).ready(function(){
     $("#displayImage1").hide();
     $("#displayImage2").hide();
     $("#displayImage3").hide();
+    $("#displayWaiting").hide();
 
 
 
@@ -177,6 +178,7 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
 
 
 
+
   database.ref("/connections").on("value", function(snap){
     // var rootRef = snap.val();
 
@@ -235,10 +237,28 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
         function startTimer(){
           // repeat(snappy);
 
+
+
+        $("#startButton").on('click', function(){
+          $("#story_button").hide();
+          $("#story").hide();
+          $("#startTimer").hide();
+          $("#timeRemaining").show();
+
+          startTimer();
+
+        });
+
+
+        function startTimer(){
+          // repeat(snappy);
+
+
           $("#resultsPlaceholder").hide();
           $("#pleaseWait").show();
 
           var countDown = 21;
+          
           var interval = setInterval(function() { 
             countDown--;
             $("#timeRemaining").html("<h1>Time Remaining: " + countDown + "</h1>");
@@ -277,6 +297,20 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
                     $("#displayImage2").hide();
                   });
 
+
+  
+                // $.ajax({
+                //   url: queryURL5,
+                //   method: "GET"
+                //   })
+                //   // After the data from the AJAX request comes back
+                //   .done(function(response) {
+                //     var imageUrl = response.data.images.fixed_height.url;
+                //     var waitingImage = $("<img>");
+                //     waitingImage.attr("src", imageUrl);
+                //     $("#displayWaiting").html(waitingImage);
+                //     $("#displayWaiting").show();
+                //   });
             }
 
             if (countDown == 0) {
@@ -309,16 +343,20 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
               $("#displayWaiting").hide();
 
 
+
           var countDown = 41;
           var interval = setInterval(function() { 
             countDown--;
             $("#timeRemaining").html("<h1>Time Remaining: " + countDown + "</h1>");
             $("#resultsPlaceholder").html("<h1>This is placeholder text to for results screen.</h1>" + "<p><h1>Vote below who you think the killer is: </h1></p>");
 
+            $("#questionArea").show();
+
            
             if (countDown == 0) {
               startTimer();
               clearInterval(interval);
+
             }
                 
           }, 1000);
