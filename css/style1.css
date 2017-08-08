@@ -85,7 +85,7 @@
 /* Make the 3D work on the container */
 .starwars-demo {
   perspective: 800px;
-  transform-style: preserve3d;
+  transform-style: preserved;
 }
 /*=================================================================================*/
 /* General styles and layout */
