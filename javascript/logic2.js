@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
 
     var audio = $("audio")[0];
@@ -100,7 +98,7 @@ connectedRef.on("value", function(snap) {
     con.onDisconnect().remove();
     console.log(con.key);
     userCon = con.key;
-  }
+  } // end of "if (snap.val) statement"
 }); //end of snap
 
 
@@ -111,12 +109,12 @@ connectionsRef.on("value", function(snap) {
   // Display the viewer count in the html.
   // The number of online users is the number of children in the connections list.
   $("#connected-viewers").html(snap.numChildren());
-});
+}); //end of connectionsRef.on - snap
 //=============================================================================================
     
   $(document).on("click", function (){
     audio.pause();
-    $(".starwars-demo").html("");
+    $("#starwars-demo").hide();
     $("#user-name").attr("class" , "user-name-display");
     $("#user-input").focus();
     
@@ -170,7 +168,7 @@ database.ref("/connections").once("value", function(snappyCharArray) {
       splicey.splice(0, 1);
       database.ref("/gameStats/characterArray").set(splicey);
 
-    });
+    }); // end of anotherSnappy
 
     database.ref("/connections/" + userCon).set(user);
 
@@ -180,8 +178,7 @@ database.ref("/connections").once("value", function(snappyCharArray) {
 
 
   database.ref("/connections").on("value", function(snap){
-    // var rootRef = snap.val();
-
+    
 
     if (snap.numChildren() === 6) {
       //hide wait screens
@@ -201,7 +198,8 @@ database.ref("/connections").once("value", function(snappyCharArray) {
 
 
         $("#startButton").on('click', function(){
-            $("#questionArea").show();
+
+          $("#questionArea").show();
           $("#story_button").hide();
           $("#story").hide();
           $("#startTimer").hide();
@@ -219,11 +217,16 @@ database.ref("/connections").once("value", function(snappyCharArray) {
 
           // database.ref().child("/connections/" + userCon).once("value", function(snappy){
 
+<<<<<<< HEAD
           
           }
+=======
 
-        }); //end of snappy
+>>>>>>> d0824c5b5933d20abaaf4115cd24af303e2f14e5
 
+        }); //end of #startButton
+
+<<<<<<< HEAD
           database.ref().child("/gameStats/startGameObject/").on("value", function(gameStartSnap){
           console.log(startGame);
           console.log(gameStartSnap.val().startGame);
@@ -237,22 +240,25 @@ database.ref("/connections").once("value", function(snappyCharArray) {
 
         function startTimer(){
           // repeat(snappy);
+=======
+        database.ref().child("/gameStats/startGameObject/").on("value", function(gameStartSnap){
+>>>>>>> d0824c5b5933d20abaaf4115cd24af303e2f14e5
+
+        console.log(startGame);
+        console.log(gameStartSnap.val().startGame);
+
+          if (gameStartSnap.val().startGame == true) {
+
+            startTimer();
+          }
+        }); // end of gameStartSnap
+        
 
 
-
-        $("#startButton").on('click', function(){
-          $("#story_button").hide();
-          $("#story").hide();
-          $("#startTimer").hide();
-          $("#timeRemaining").show();
-
-          startTimer();
-
-        });
+      
 
 
         function startTimer(){
-          // repeat(snappy);
 
 
           $("#resultsPlaceholder").hide();
@@ -298,20 +304,6 @@ database.ref("/connections").once("value", function(snappyCharArray) {
                     $("#displayImage2").hide();
                   });
 
-
-  
-                // $.ajax({
-                //   url: queryURL5,
-                //   method: "GET"
-                //   })
-                //   // After the data from the AJAX request comes back
-                //   .done(function(response) {
-                //     var imageUrl = response.data.images.fixed_height.url;
-                //     var waitingImage = $("<img>");
-                //     waitingImage.attr("src", imageUrl);
-                //     $("#displayWaiting").html(waitingImage);
-                //     $("#displayWaiting").show();
-                //   });
             }
 
             if (countDown == 0) {
@@ -365,11 +357,15 @@ database.ref("/connections").once("value", function(snappyCharArray) {
 
 
 
+<<<<<<< HEAD
         // };
+=======
+      }); // end of "snappy".
+>>>>>>> d0824c5b5933d20abaaf4115cd24af303e2f14e5
 
-    } //end of if (snap.numChildren() code.
+    } // end of "if (snap.numChildren"
 
-  });
+  }); // end of "snap"
 
 
 
@@ -395,7 +391,8 @@ function displayStory() {
   $.ajax({ 
     url: queryURL1,
     method: "GET"
-  }).done(function(response) {
+  })
+    .done(function(response) {
 
       var episode = response.episode_id;
       // console.log("Episode #: " + episode);
@@ -410,40 +407,37 @@ function displayStory() {
 
       $("#story").html("<h1>Star Wars: Episode " + episode + " - " + title +"</h1><p>" + intro + "</p>");
     
-  });
+    });
 
 
   $.ajax({
-      url: queryURL2,
-      method: "GET"
-      })
-      // After the data from the AJAX request comes back
-      .done(function(response) {
-        var imageUrl = response.data.images.fixed_height_still.url;
-        var goodGuysImage = $("<img>");
-        goodGuysImage.attr("src", imageUrl);
-        $("#displayImage1").html(goodGuysImage);
-      });
+    url: queryURL2,
+    method: "GET"
+  })
+    // After the data from the AJAX request comes back
+    .done(function(response) {
+      var imageUrl = response.data.images.fixed_height_still.url;
+      var goodGuysImage = $("<img>");
+      goodGuysImage.attr("src", imageUrl);
+      $("#displayImage1").html(goodGuysImage);
+    });
 
-   $.ajax({
-      url: queryURL3,
-      method: "GET"
-      })
-      // After the data from the AJAX request comes back
-      .done(function(response) {
-        var imageUrl = response.data.images.fixed_height_still.url;
-        var badGuysImage = $("<img>");
-        badGuysImage.attr("src", imageUrl);
-        $("#displayImage2").html(badGuysImage);
-      });
-
-
+  $.ajax({
+    url: queryURL3,
+    method: "GET"
+  })
+    // After the data from the AJAX request comes back
+    .done(function(response) {
+      var imageUrl = response.data.images.fixed_height_still.url;
+      var badGuysImage = $("<img>");
+      badGuysImage.attr("src", imageUrl);
+      $("#displayImage2").html(badGuysImage);
+    });
 
 
-  
+} // end of displayStory function
 
 
-}
 
 function renderButtons() {
 
@@ -462,17 +456,13 @@ function renderButtons() {
     //-----adding buttons into the section "buttons-view"-----//
     $("#story_button").append(newButton); 
   }
-}
+} // end of renderButtons
 
 renderButtons();
 
 
 //==========when child element(.gif-button) in document is clicked, run function==========//
 $(document).on("click", ".button", displayStory);
-
-
-
-
 
 
 });
