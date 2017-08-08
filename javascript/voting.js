@@ -18,7 +18,7 @@
     // Get a reference to the database service
     // var database = firebase.database();
 // ========================================================================
-    $("#questionArea").show();
+ 
 
     var user1Count = 0;
     var user2Count = 0;
