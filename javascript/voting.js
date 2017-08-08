@@ -18,17 +18,23 @@
     // Get a reference to the database service
     // var database = firebase.database();
 // ========================================================================
+    $("#questionArea").show();
+
     var user1Count = 0;
     var user2Count = 0;
     var user3Count = 0;
-      console.log(user1Count);
-      console.log(user2Count);
-      console.log(user3Count);
+    var user4Count = 0;
+    var user5Count = 0;
+    var user6Count = 0;
+
+      // console.log(user1Count);
+      // console.log(user2Count);
+      // console.log(user3Count);
 
     $("#submitBtn").on("click", function() {
       // Don't refresh the page!
       event.preventDefault();
-
+      console.log("Voting Button Pressed");
       //capture user input into global variables.
       if ($("input:checked").val() === "User 1")
         user1Count++;
@@ -36,44 +42,54 @@
         user2Count++;
       else if ($("input:checked").val() === "User 3")
         user3Count++;
+      else if ($("input:checked").val() === "User 4")
+        user4Count++;
+      else if ($("input:checked").val() === "User 5")
+        user5Count++;
+      else if ($("input:checked").val() === "User 6")
+        user6Count++;
   
-      		
+          
 
       //Put new variable data into one object to make it easy to display the object properties/values in one row:
       var voteObject = {
         user1Data: user1Count,
-  	    user2Data: user2Count,
-  	    user3Data: user3Count
+        user2Data: user2Count,
+        user3Data: user3Count,
+        user4Data: user4Count,
+        user5Data: user5Count,
+        user6Data: user6Count
       }
       database.ref("/gameStats/voteObject").set({
-	      voteObject
+        voteObject
       });
 
       // Clears all of the text-boxes
-	  $('input[name="selectUser"]').prop('checked', false);
+    $('input[name="selectUser"]').prop('checked', false);
 
+    $("#questionArea").html("");
     });
 // =========================================================================
 // shows which user was selected?
-	database.ref().on("child_added", function(childSnapshot) {
+  database.ref().on("child_added", function(childSnapshot) {
 
-		if ($('#selectUser1').is(':checked')){
-		    var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteObject.user1Data);
-			$("#tBody").append(tableRow);
-		}
-		else if ($('#selectUser2').is(':checked')){
-			var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteObject.user2Data);
-			$("#tBody").append(tableRow);
-		}
-		else if ($('#selectUser3').is(':checked')){
-			var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteObject.user3Data);
-			$("#tBody").append(tableRow);
-		}
+    if ($('#selectUser1').is(':checked')){
+        var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteObject.user1Data);
+      $("#tBody").append(tableRow);
+    }
+    else if ($('#selectUser2').is(':checked')){
+      var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteObject.user2Data);
+      $("#tBody").append(tableRow);
+    }
+    else if ($('#selectUser3').is(':checked')){
+      var tableRow = $("<tr>").html("<td>" + childSnapshot.val().voteObject.user3Data);
+      $("#tBody").append(tableRow);
+    }
 
-	      // Handle the errors
-	    }, function(errorObject) {
-	      console.log("Errors handled: " + errorObject.code);
-	    });
+        // Handle the errors
+      }, function(errorObject) {
+        console.log("Errors handled: " + errorObject.code);
+      });
 
 
 

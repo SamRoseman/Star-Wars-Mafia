@@ -46,7 +46,8 @@
   <div id = "story"></div>
   <div id = "displayImage1"></div>
   <div id = "displayImage2"></div>
-  <div id = "displayWaiting"></div>
+  <div id = "displayImage3"><h1>Awaiting selections from Hero and Villain.  Please stand by Droid.</h1></div>
+  <div id = "displayWaiting">Waiting....</div>
 
  
 
@@ -55,13 +56,16 @@
 
 <!--///////////////////////////////////////////////////////////-->
 
-<div id="timerArea">
-	<h2>When all users are ready, initiate battle by clicking "Start!"</h2>
+<div id="startTimer">
+	<h2>When 6 Users have logged on, click START to begin!  BE READY!</h2>
 	<button id="startButton"> Start! </button>
-	<div id="timeRemaining">Time Remaining: </div>
 </div>
+	<div id="timeRemaining"><h1>Time Remaining: </h1></div>
 
 <!--///////////////////////////////////////////////////////////-->
+
+<div id="pleaseWait"></div>
+<div id="resultsPlaceholder"></div>
 
 
 <!--///////////////////////////////////////////////////////////-->
@@ -82,6 +86,19 @@
             <label>
               <input type="radio" name="selectUser" id="selectUser3" value="User 3">User 3</label>
           </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="selectUser" id="selectUser4" value="User 4">User 4</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="selectUser" id="selectUser5" value="User 5">User 5</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="selectUser" id="selectUser6" value="User 6">User 6</label>
+          </div>
+
         </div>
         <br />
         
@@ -97,19 +114,9 @@
 <!--///////////////////////////////////////////////////////////-->
     
   	<div id="answersTable">
-      <h2>Who you think the killer is:</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Player selected per round:</th>
-          </tr>
-        </thead>
-        <tbody id="tBody">
-          <tr id="template" style="display: none">
-            <td data="selectUser"></td>
-          </tr>
-        </tbody>
-      </table>
+      <h2>Who you think the killer is: <span id = "answer"></span></h2>
+
+
     </div>
 
 <!--///////////////////////////////////////////////////////////-->
@@ -132,6 +139,18 @@
             <label>
               <input type="radio" name="deadUser" id="deadUser3" value="Dead User 3">User 3 - Kill?</label>
           </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="deadUser" id="deadUser4" value="Dead User 4">User 4 - Kill?</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="deadUser" id="deadUser5" value="Dead User 5">User 5 - Kill?</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="deadUser" id="deadUser6" value="Dead User 6">User 6 - Kill?</label>
+          </div>
         </div>
         <br />
         
@@ -144,19 +163,10 @@
 <!--///////////////////////////////////////////////////////////-->
 
 	<div id="deadTable">
-      <h2>Who you've chosen to perish:</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Player selected per round:</th>
-          </tr>
-        </thead>
-        <tbody id="tDeadBody">
-          <tr id="template" style="display: none">
-            <td data="selectUser"></td>
-          </tr>
-        </tbody>
-      </table>
+      <h2>Who you've chosen to perish: <span id = "deadAns"></span></h2>
+
+
+
     </div>
 
 <!--///////////////////////////////////////////////////////////-->
@@ -179,6 +189,18 @@
             <label>
               <input type="radio" name="saveUser" id="saveUser3" value="Saved User 3">User 3 - Save?</label>
           </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="saveUser" id="saveUser4" value="Saved User 4">User 4 - Save?</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="saveUser" id="saveUser5" value="Saved User 5">User 5 - Save?</label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="saveUser" id="saveUser6" value="Saved User 6">User 6 - Save?</label>
+          </div>                    
         </div>
         <br />
         
@@ -191,19 +213,9 @@
 <!--///////////////////////////////////////////////////////////-->
 
 	<div id="saveTable">
-      <h2>Who you've chosen to perish:</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Player selected per round:</th>
-          </tr>
-        </thead>
-        <tbody id="tSaveBody">
-          <tr id="template" style="display: none">
-            <td data="selectUser"></td>
-          </tr>
-        </tbody>
-      </table>
+      <h2>Who you've chosen to perish: <span id = "saveAns"></span></h2>
+
+
     </div>
 
 <!--///////////////////////////////////////////////////////////-->

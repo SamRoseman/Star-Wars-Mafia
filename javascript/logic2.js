@@ -8,7 +8,8 @@ $(document).ready(function(){
 
     // $("#starwars-demo").show();
     // $("#user-name").show();
-    $("#timerArea").hide();
+    $("#startTimer").hide();
+    $("#timeRemaining").hide();
     $("#questionArea").hide();
     $("#answersTable").hide();
     $("#deadArea").hide();
@@ -19,7 +20,8 @@ $(document).ready(function(){
     $("#story").hide();
     $("#displayImage1").hide();
     $("#displayImage2").hide();
-
+    $("#displayImage3").hide();
+    $("#displayWaiting").hide();
 
 
 setTimeout(function(){
@@ -50,9 +52,11 @@ var kyloID = "Sq7gNmCWU7iSs";
 
 // Droid variable - specific ID based on Giphy page.
 var droidID = "Tdf5O0ik31iPS";
+var queryURL4 = "https://api.giphy.com/v1/gifs/" + droidID + "?api_key=24a1780a82694e2f91abe2751c4b3e4d";
 
 // Waiting GIF to show waiting for other users.
 var waiting = "luA2Qmo9KVQC4";
+var queryURL5 = "https://api.giphy.com/v1/gifs/" + waiting + "?api_key=24a1780a82694e2f91abe2751c4b3e4d";
 
 // Arrays in order of release date, displays after button click based on index of episodes.
 var goodGuys = [placeholder1, hanID, lukeID, leiaID, quiGonID, yodaID, obiWanID, reyID];
@@ -62,12 +66,7 @@ var buttons = ["A New Hope", "The Empire Strikes Back", "Return of the Jedi", "T
 
 
 var characterArray = ["hero" , "villain" , "droid1" , "droid2" , "droid3", "droid4"];
-var user1;
-var user2;
-var user3;
-var user4;
-var user5;
-var user6;
+
 var charCounter;
 var user;
 var userCon;
@@ -114,7 +113,7 @@ connectionsRef.on("value", function(snap) {
     audio.pause();
     $(".starwars-demo").html("");
     $("#user-name").attr("class" , "user-name-display");
-
+    $("#user-input").focus();
     
   });
 
@@ -148,18 +147,11 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
     $("#story").show();
     $("#starwars-demo").hide();
     $("#user-name").hide();
-    $("#timerArea").show();
+    $("#startTimer").show();
     $("#displayImage1").show();
     $("#displayImage2").show();
 
    
-  
-   
-    // database.ref("/gameStats/characterCounter").set(charCounter);
-    
-    
-    
-
     database.ref("/gameStats/characterArray").once("value", function(anotherSnappy){
       var userName = $("#user-input").val();
       var splicey = anotherSnappy.val();
@@ -169,45 +161,16 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
       character: splicey[0]
       };
 
-
-      
       console.log(splicey);
       splicey.splice(0, 1);
       database.ref("/gameStats/characterArray").set(splicey);
+
     });
-    
-
-    // database.ref().child("/connections/" + userCon).once("value", function(snappyRemove){
-    //     console.log(snappyRemove.val().character);
-    //     var snappyRemoveCharVal = snappyRemove.val().character;
-
-    //     if (snappyRemoveCharVal === "villian"){
-    //       snappyRemoveCharVal.remove();
-    //     }
-    //     if (snappyRemoveCharVal === "hero"){
-    //       snappyRemoveCharVal.remove();
-    //     }
-    //     if (snappyRemoveCharVal === "droid1"){
-    //       snappyRemoveCharVal.remove();
-    //     }
-    //     if (snappyRemoveCharVal === "droid2"){
-    //       snappyRemoveCharVal.remove();
-    //     }
-    //     if (snappyRemoveCharVal === "droid3"){
-    //       snappyRemoveCharVal.remove();
-    //     }
-    //     if (snappyRemoveCharVal === "droid4"){
-    //       snappyRemoveCharVal.remove();
-    //     }
-    //   });
-  
 
     database.ref("/connections/" + userCon).set(user);
-    
- 
-
 
   });
+
 
 
   database.ref("/connections").on("value", function(snap){
@@ -216,10 +179,11 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
 
     if (snap.numChildren() === 6) {
       //hide wait screens
-      $("#story_button").hide();
-      $("#story").hide();
-      $("#displayImage1").hide();
-      $("#displayImage2").hide();
+      // $("#story_button").hide();
+      // $("#story").hide();
+      // $("#displayImage1").hide();
+      // $("#displayImage2").hide();
+      $("#startButton").show();
 
       // console.log(snap.child("connections/character").val());
       database.ref().child("/connections/" + userCon).once("value", function(snappy){
@@ -227,22 +191,129 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
         var snappyCharVal = snappy.val().character;
      
 
-       
-          if (snappyCharVal === "villain"){
+
+
+        $("#startButton").on('click', function(){
+          $("#story_button").hide();
+          $("#story").hide();
+          $("#startTimer").hide();
+          $("#timeRemaining").show();
+
+          startTimer();
+
+        });
+
+
+        function startTimer(){
+          // repeat(snappy);
+
+          $("#resultsPlaceholder").hide();
+          $("#pleaseWait").show();
+
+          var countDown = 31;
+          var interval = setInterval(function() { 
+            countDown--;
+            $("#timeRemaining").html("<h1>Time Remaining: " + countDown + "</h1>");
+            $("#pleaseWait").html("<h1>Waiting for the Villain and Hero to make their choices...</h1>");
+
+
+
+            if (snappyCharVal === "villain"){
+                $("#displayImage2").show();
+                $("#displayImage1").hide();
                 $("#deadArea").show();
                 $("#deadTable").show();
             }
             else if (snappyCharVal === "hero"){
+                $("#displayImage1").show();
+                $("#displayImage2").hide();
                 $("#saveArea").show();
                 $("#saveTable").show();
                 // $("#questionArea").show();
                 // $("#answersTable").show();
             }
-            else if (snappyCharVal === "droid1"){
-                $("displayWaiting").html("WAITING!");
+            else if (snappyCharVal === "droid1" || snappyCharVal === "droid2" || snappyCharVal === "droid3" || snappyCharVal === "droid4"){
+
+               $.ajax({
+                  url: queryURL4,
+                  method: "GET"
+                  })
+                // After the data from the AJAX request comes back
+                  .done(function(response) {
+                    var imageUrl = response.data.images.fixed_height.url;
+                    var droidImage = $("<img>");
+                    droidImage.attr("src", imageUrl);
+                    $("#displayImage3").html(droidImage);
+                    $("#displayImage3").show();
+                    $("#displayImage1").hide();
+                    $("#displayImage2").hide();
+                  });
+
+  
+                // $.ajax({
+                //   url: queryURL5,
+                //   method: "GET"
+                //   })
+                //   // After the data from the AJAX request comes back
+                //   .done(function(response) {
+                //     var imageUrl = response.data.images.fixed_height.url;
+                //     var waitingImage = $("<img>");
+                //     waitingImage.attr("src", imageUrl);
+                //     $("#displayWaiting").html(waitingImage);
+                //     $("#displayWaiting").show();
+                //   });
             }
 
-      
+
+
+            if (countDown == 0) {
+              showResults();
+              clearInterval(interval);
+                }
+                
+          }, 1000);
+
+        };
+
+        
+
+        function showResults(){
+          
+          // SHOW RESULTS OF WHO WAS KILLED OR IF PEOPLE ARE SAFE - Then - SET NEXT TIMER:
+              $("#resultsPlaceholder").show();
+              $("#pleaseWait").hide();
+              
+              $("#displayImage2").hide();
+
+              $("#deadArea").hide();
+              $("#deadTable").hide();
+              
+              $("#displayImage1").hide();
+              $("#saveArea").hide();
+              $("#saveTable").hide();
+
+              $("#displayImage3").hide();
+              $("#displayWaiting").hide();
+
+
+          var countDown = 121;
+          var interval = setInterval(function() { 
+            countDown--;
+            $("#timeRemaining").html("<h1>Time Remaining: " + countDown + "</h1>");
+            $("#resultsPlaceholder").html("<h1>This is placeholder text to for results screen.</h1>" + "<p><h1>Vote below who you think the killer is: </h1></p>");
+            $("#questionArea").show();
+           
+            if (countDown == 0) {
+              startTimer();
+              clearInterval(interval);
+                }
+                
+          }, 1000);
+
+        };
+
+
+
         });
       //show roles (all the if statements)
     }
@@ -265,6 +336,7 @@ function displayStory() {
 
   var queryURL2 = "https://api.giphy.com/v1/gifs/" + goodGuys[index] + "?api_key=24a1780a82694e2f91abe2751c4b3e4d";
   var queryURL3 = "https://api.giphy.com/v1/gifs/" + badGuys[index] + "?api_key=24a1780a82694e2f91abe2751c4b3e4d";
+  
 
 
   //----------ajax is calling the url----------//
@@ -301,12 +373,11 @@ function displayStory() {
         $("#displayImage1").html(goodGuysImage);
       });
 
-
-  $.ajax({
+   $.ajax({
       url: queryURL3,
       method: "GET"
       })
-    // After the data from the AJAX request comes back
+      // After the data from the AJAX request comes back
       .done(function(response) {
         var imageUrl = response.data.images.fixed_height_still.url;
         var badGuysImage = $("<img>");
@@ -314,17 +385,10 @@ function displayStory() {
         $("#displayImage2").html(badGuysImage);
       });
 
-  $.ajax({
-      url: queryURL4,
-      method: "GET"
-      })
-      // After the data from the AJAX request comes back
-      .done(function(response) {
-        var imageUrl = response.data.images.fixed_height_still.url;
-        var goodGuysImage = $("<img>");
-        goodGuysImage.attr("src", imageUrl);
-        $("#displayImage1").html(goodGuysImage);
-      });
+
+
+
+  
 
 
 }
@@ -353,7 +417,6 @@ renderButtons();
 
 //==========when child element(.gif-button) in document is clicked, run function==========//
 $(document).on("click", ".button", displayStory);
-
 
 
 
