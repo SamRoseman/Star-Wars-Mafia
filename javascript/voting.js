@@ -23,6 +23,7 @@
     var user1Count = 0;
     var user2Count = 0;
     var user3Count = 0;
+
     var user4Count = 0;
     var user5Count = 0;
     var user6Count = 0;
