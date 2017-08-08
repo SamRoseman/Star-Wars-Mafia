@@ -168,6 +168,7 @@ button,
   border: none;
   border-radius: 15px;
 }
+
 button:hover,
 #go:hover,
 .button:hover {
@@ -187,6 +188,11 @@ h1 {
   color: white;
 }
 
+h2 {
+  font-family: 'Saira Extra Condensed', sans-serif;
+  color: white;
+
+}
 p {
   font-family: 'Saira Extra Condensed', sans-serif;
   color: white; 
