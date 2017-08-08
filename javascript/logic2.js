@@ -136,7 +136,7 @@ database.ref("/connections").once("value", function(snappyCharArray) {
 
 
 
-database.ref("/connections").on("child_added", function(childSnapshot) {
+  database.ref("/connections").on("child_added", function(childSnapshot) {
  
 
   }); //end of childSnapshot
@@ -190,6 +190,7 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
       // $("#displayImage1").hide();
       // $("#displayImage2").hide();
       $("#startButton").show();
+    }
 
       // console.log(snap.child("connections/character").val());
       database.ref().child("/connections/" + userCon).once("value", function(snappy){
@@ -219,7 +220,7 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
           // database.ref().child("/connections/" + userCon).once("value", function(snappy){
 
           
-
+          }
 
         }); //end of snappy
 
@@ -229,7 +230,7 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
             if (gameStartSnap.val().startGame == true) {
 
               startTimer();
-            }
+            };
           }); // end of gameStartSnap
         
 
@@ -356,7 +357,6 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
             if (countDown == 0) {
               startTimer();
               clearInterval(interval);
-
             }
                 
           }, 1000);
@@ -365,7 +365,7 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
 
 
 
-        });
+        // };
 
     } //end of if (snap.numChildren() code.
 
