@@ -134,7 +134,7 @@ database.ref("/connections").once("value", function(snappyCharArray) {
 
 
 
-  database.ref("/connections").on("child_added", function(childSnapshot) {
+database.ref("/connections").on("child_added", function(childSnapshot) {
  
 
   }); //end of childSnapshot
@@ -187,7 +187,6 @@ database.ref("/connections").once("value", function(snappyCharArray) {
       // $("#displayImage1").hide();
       // $("#displayImage2").hide();
       $("#startButton").show();
-    }
 
       // console.log(snap.child("connections/character").val());
       database.ref().child("/connections/" + userCon).once("value", function(snappy){
@@ -217,32 +216,11 @@ database.ref("/connections").once("value", function(snappyCharArray) {
 
           // database.ref().child("/connections/" + userCon).once("value", function(snappy){
 
-<<<<<<< HEAD
-          
-          }
-=======
 
->>>>>>> d0824c5b5933d20abaaf4115cd24af303e2f14e5
 
         }); //end of #startButton
 
-<<<<<<< HEAD
-          database.ref().child("/gameStats/startGameObject/").on("value", function(gameStartSnap){
-          console.log(startGame);
-          console.log(gameStartSnap.val().startGame);
-            if (gameStartSnap.val().startGame == true) {
-
-              startTimer();
-            };
-          }); // end of gameStartSnap
-        
-
-
-        function startTimer(){
-          // repeat(snappy);
-=======
         database.ref().child("/gameStats/startGameObject/").on("value", function(gameStartSnap){
->>>>>>> d0824c5b5933d20abaaf4115cd24af303e2f14e5
 
         console.log(startGame);
         console.log(gameStartSnap.val().startGame);
@@ -349,6 +327,7 @@ database.ref("/connections").once("value", function(snappyCharArray) {
             if (countDown == 0) {
               startTimer();
               clearInterval(interval);
+
             }
                 
           }, 1000);
@@ -357,11 +336,7 @@ database.ref("/connections").once("value", function(snappyCharArray) {
 
 
 
-<<<<<<< HEAD
-        // };
-=======
       }); // end of "snappy".
->>>>>>> d0824c5b5933d20abaaf4115cd24af303e2f14e5
 
     } // end of "if (snap.numChildren"
 
