@@ -31,6 +31,10 @@ setTimeout(function(){
 
 
 //VARIABLES ==============================================================================
+var startGame = false;
+
+var startGameObject;
+
 var placeholder1 = "whatever";
 var quiGonID = "WJdNmeAxkpZIc";
 var yodaID = "zQhFEBrX6plKg";
@@ -96,7 +100,7 @@ connectedRef.on("value", function(snap) {
     console.log(con.key);
     userCon = con.key;
   }
-});
+}); //end of snap
 
 
 // When first loaded or when the connections list changes...
@@ -126,7 +130,7 @@ database.ref("/connections").once("value", function(snappyCharArray) {
     }
     console.log(snappyCharArray.numChildren());
 
-  }); 
+  }); //end of snappyCharArray
 
 
 
@@ -134,7 +138,7 @@ database.ref("/connections").once("value", function(snappyCharArray) {
 database.ref("/connections").on("child_added", function(childSnapshot) {
  
 
-  }); 
+  }); //end of childSnapshot
 
 
 
@@ -169,7 +173,7 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
 
     database.ref("/connections/" + userCon).set(user);
 
-  });
+  }); //end of click "go" function
 
 
 
@@ -190,18 +194,41 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
         console.log(snappy.val().character);
         var snappyCharVal = snappy.val().character;
      
-
+        database.ref("/gameStats/startGameObject/").set(startGameObject);
 
 
         $("#startButton").on('click', function(){
           $("#story_button").hide();
           $("#story").hide();
           $("#startTimer").hide();
+          $("#startButton").hide();
           $("#timeRemaining").show();
 
-          startTimer();
+          startGame = true;
+          startGameObject = {startGame: startGame}
 
-        });
+          database.ref("/gameStats/startGameObject/").set(startGameObject);
+
+          // started property in database, string true/false.
+          // If true, then startTimer();
+          
+
+          // database.ref().child("/connections/" + userCon).once("value", function(snappy){
+
+          
+
+
+        }); //end of snappy
+
+          database.ref().child("/gameStats/startGameObject/").on("value", function(gameStartSnap){
+          console.log(startGame);
+          console.log(gameStartSnap.val().startGame);
+            if (gameStartSnap.val().startGame == true) {
+
+              startTimer();
+            }
+          }); // end of gameStartSnap
+        
 
 
         function startTimer(){
@@ -210,7 +237,7 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
           $("#resultsPlaceholder").hide();
           $("#pleaseWait").show();
 
-          var countDown = 31;
+          var countDown = 21;
           var interval = setInterval(function() { 
             countDown--;
             $("#timeRemaining").html("<h1>Time Remaining: " + countDown + "</h1>");
@@ -249,31 +276,16 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
                     $("#displayImage2").hide();
                   });
 
-  
-                // $.ajax({
-                //   url: queryURL5,
-                //   method: "GET"
-                //   })
-                //   // After the data from the AJAX request comes back
-                //   .done(function(response) {
-                //     var imageUrl = response.data.images.fixed_height.url;
-                //     var waitingImage = $("<img>");
-                //     waitingImage.attr("src", imageUrl);
-                //     $("#displayWaiting").html(waitingImage);
-                //     $("#displayWaiting").show();
-                //   });
             }
-
-
 
             if (countDown == 0) {
               showResults();
               clearInterval(interval);
-                }
+            }
                 
           }, 1000);
 
-        };
+        }; //end of startTimer function
 
         
 
@@ -296,7 +308,7 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
               $("#displayWaiting").hide();
 
 
-          var countDown = 121;
+          var countDown = 41;
           var interval = setInterval(function() { 
             countDown--;
             $("#timeRemaining").html("<h1>Time Remaining: " + countDown + "</h1>");
@@ -306,17 +318,18 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
             if (countDown == 0) {
               startTimer();
               clearInterval(interval);
-                }
+            }
                 
           }, 1000);
 
-        };
+        }; //end of showResults function
 
 
 
         });
-      //show roles (all the if statements)
-    }
+
+    } //end of if (snap.numChildren() code.
+
   });
 
 
