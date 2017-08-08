@@ -87,20 +87,23 @@
   perspective: 800px;
   transform-style: preserve3d;
 }
-
+/*=================================================================================*/
 /* General styles and layout */
-body {
-  background: #000 url(http://cssanimation.rocks/demo/starwars/images/bg.jpg);
-  color:white;
-}
-
 .starwars-demo {
   height: 17em;
   left: 50%;
   position: absolute;
-  top: 53%;
+  top: 45%;
   transform: translate(-50%, -50%);
   width: 34em;
+  text-align: left;
+}
+
+body {
+  background: #000 url(http://cssanimation.rocks/demo/starwars/images/bg.jpg);
+  color: white;
+  text-align: center;
+  margin: 15px;
 }
 
 .byline span {
@@ -133,7 +136,7 @@ img {
   right: -2em;
   text-align: center;
   text-transform: uppercase;
-  top: 29%;
+  top: 39%;
 } 
 
 .user-name-nodisplay {
@@ -149,10 +152,21 @@ img {
   text-transform: uppercase;
 
 }
+label {
+  color: white;
+  font-size: 25px;
+}
 
-#user-input {
-  width: 400px;
- 
+button {
+  color: white;
+  font-size: 30px;
+  margin: 10px;
+}
+
+.button {
+  color: white;
+  margin: 10px;
+
 }
 
 

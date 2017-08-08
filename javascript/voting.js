@@ -21,9 +21,9 @@
     var user1Count = 0;
     var user2Count = 0;
     var user3Count = 0;
-      console.log(user1Count);
-      console.log(user2Count);
-      console.log(user3Count);
+      // console.log(user1Count);
+      // console.log(user2Count);
+      // console.log(user3Count);
 
     $("#submitBtn").on("click", function() {
       // Don't refresh the page!
