@@ -194,6 +194,7 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
 
 
         $("#startButton").on('click', function(){
+            $("#questionArea").show();
           $("#story_button").hide();
           $("#story").hide();
           $("#startTimer").hide();
