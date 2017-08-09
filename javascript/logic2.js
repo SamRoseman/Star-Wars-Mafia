@@ -78,7 +78,8 @@ var char;
 
 
 var snappyName;
-
+var userName;
+var userArray;
 
 //==========================================================================================
 
@@ -161,13 +162,17 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
 
    
     database.ref("/gameStats/characterArray").once("value", function(anotherSnappy){
-      var userName = $("#user-input").val();
+      userName = $("#user-input").val();
       var splicey = anotherSnappy.val();
     
       user = {
       userName: userName,
       character: splicey[0]
       };
+
+      userArray = [];
+
+
 
       console.log(splicey);
       splicey.splice(0, 1);
@@ -176,6 +181,7 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
     }); // end of anotherSnappy
 
     database.ref("/connections/" + userCon).set(user);
+    database.ref("/gameStats/userArray/").push(userName);
 
   }); //end of click "go" function
 
@@ -465,6 +471,8 @@ $(document).on("click", ".button", displayStory);
     $("#submitBtn").on("click", function() {
       // Don't refresh the page!
       event.preventDefault();
+      console.log("Vote Button is clicked");
+
 
       database.ref("/gameStats/voteObject").on("value", function(snapVote) {
         var newCount1 = snapVote.val().voteObject.user1Data;
@@ -540,31 +548,61 @@ $(document).on("click", ".button", displayStory);
     var user1Alive = true;
     var user2Alive = true;
     var user3Alive = true;
+    var user4Alive = true;
+    var user5Alive = true;
+    var user6Alive = true;    
 
     var voteDeadAliveObject = {
         user1Alive: user1Alive,
         user2Alive: user2Alive,
-        user3Alive: user3Alive
+        user3Alive: user3Alive,
+        user4Alive: user4Alive,
+        user5Alive: user5Alive,
+        user6Alive: user6Alive
+
       }
+
 
 
     $("#deadBtn").on("click", function() {
       // Don't refresh the page!
       event.preventDefault();
-
+      console.log("Dead Button is clicked");
       
       //capture user input into global variables.
-      if ($("input:checked").val() === "Dead User 1")
+      if ($("input:checked").val() === "Dead User 1") {
         user1Alive = false;
-      else if ($("input:checked").val() === "Dead User 2")
+        $("#deadAns").html("User 1");            
+      }
+      else if ($("input:checked").val() === "Dead User 2") {
         user2Alive = false;
-      else if ($("input:checked").val() === "Dead User 3")
+        $("#deadAns").html("User 2");
+      }
+      else if ($("input:checked").val() === "Dead User 3") {
         user3Alive = false;
+        $("#deadAns").html("User 3");
+      }
+      else if ($("input:checked").val() === "Dead User 4") {
+        user4Alive = false;
+        $("#deadAns").html("User 4");
+      }
+      else if ($("input:checked").val() === "Dead User 5") {
+        user5Alive = false;
+        $("#deadAns").html("User 5");
+      }
+      else if ($("input:checked").val() === "Dead User 6") {
+        user6Alive = false;
+        $("#deadAns").html("User 6");  
+      }
 
       voteDeadAliveObject = {
         user1Alive: user1Alive,
         user2Alive: user2Alive,
-        user3Alive: user3Alive
+        user3Alive: user3Alive,
+        user4Alive: user4Alive,
+        user5Alive: user5Alive,
+        user6Alive: user6Alive
+
       }
     
    
@@ -608,20 +646,42 @@ $(document).on("click", ".button", displayStory);
     $("#saveBtn").on("click", function() {
       // Don't refresh the page!
       event.preventDefault();
+      console.log("Save Button is clicked");
 
       
       //capture user input into global variables.
-      if ($("input:checked").val() === "Saved User 1")
+      if ($("input:checked").val() === "Saved User 1") {
         user1Alive = true;
-      else if ($("input:checked").val() === "Saved User 2")
+        $("#saveAns").html("User 1"); 
+      }
+      else if ($("input:checked").val() === "Saved User 2") {
         user2Alive = true;
-      else if ($("input:checked").val() === "Saved User 3")
+        $("#saveAns").html("User 2"); 
+      }
+      else if ($("input:checked").val() === "Saved User 3") {
         user3Alive = true;
+        $("#saveAns").html("User 3"); 
+      }
+      else if ($("input:checked").val() === "Saved User 4") {
+        user4Alive = true;
+        $("#saveAns").html("User 4"); 
+      }
+      else if ($("input:checked").val() === "Saved User 5") {
+        user5Alive = true;
+        $("#saveAns").html("User 5"); 
+      }
+      else if ($("input:checked").val() === "Saved User 6") {
+        user6Alive = true;
+        $("#saveAns").html("User 6"); 
+      }
 
       voteDeadAliveObject = {
         user1Alive: user1Alive,
         user2Alive: user2Alive,
-        user3Alive: user3Alive
+        user3Alive: user3Alive,
+        user4Alive: user4Alive,
+        user5Alive: user5Alive,
+        user6Alive: user6Alive
       }
      
   
@@ -632,7 +692,7 @@ $(document).on("click", ".button", displayStory);
 
       // Clears all of the text-boxes
     $('input[name="saveUser"]').prop('checked', false);
-
+    $("#saveArea").hide();
     });
 
 
@@ -668,18 +728,54 @@ $(document).on("click", ".button", displayStory);
     // });  
 
   function displayVotes() {
+    $("#timeRemaining").hide();
     database.ref("/gameStats/voteObject/voteObject").on("value", function(snapResult) {
       console.log(snapResult.val().user1Data);
       $("#questionArea").hide();
+
+      database.ref("/gameStats/lifeStatus/voteDeadAliveObject").on("value", function(snapAlive) {
+        console.log(snapAlive.val().user1Alive);
+        console.log(snapAlive.val().user2Alive);
+        console.log(snapAlive.val().user3Alive);
+        console.log(snapAlive.val().user4Alive);
+        console.log(snapAlive.val().user5Alive);
+        console.log(snapAlive.val().user6Alive);
+
+
       $("#resultsPlaceholder").show();
       $("#resultsPlaceholder").html(
-        // "<p>This is " + userName + "'s' votes: " + snapResult.val().user1Data + "</p>" + 
-        "<div><h2>Here's how many voted for User 1: " + snapResult.val().user1Data + 
-        "<br />Here's how many voted for User 2: " + snapResult.val().user2Data + 
-        "<br />Here's how many voted for User 3: " + snapResult.val().user3Data +  
-        "<br />Here's how many voted for User 4: " + snapResult.val().user4Data + 
-        "<br />Here's how many voted for User 5: " + snapResult.val().user5Data + 
-        "<br />Here's how many voted for User 6: " + snapResult.val().user6Data + "</h2></div>");
+        // "<p>This is " + userName + "'s' votes: " + snapResult.val().user1Data + "</p>" +
+        "<div><h1>RESULTS: </h1>" +
+        "<br /><h2>Here's how many voted against User 1: " + snapResult.val().user1Data + 
+        "<br />Here's how many voted against User 2: " + snapResult.val().user2Data + 
+        "<br />Here's how many voted against User 3: " + snapResult.val().user3Data +  
+        "<br />Here's how many voted against User 4: " + snapResult.val().user4Data + 
+        "<br />Here's how many voted against User 5: " + snapResult.val().user5Data + 
+        "<br />Here's how many voted against User 6: " + snapResult.val().user6Data + "</h2></div>");
+      
+        if(snapAlive.val().user1Alive == false) {
+          $("#resultsPlaceholder").append("<br /><h2>Darth Vader has sliced User 1</h2>");
+        }
+        else if(snapAlive.val().user2Alive == false) {
+          $("#resultsPlaceholder").append("<br /><h2>Darth Vader has sliced User 2</h2>");
+        }
+        else if(snapAlive.val().user3Alive == false) {
+          $("#resultsPlaceholder").append("<br /><h2>Darth Vader has sliced User 3</h2>");
+        }
+        else if(snapAlive.val().user4Alive == false) {
+          $("#resultsPlaceholder").append("<br /><h2>Darth Vader has sliced User 4</h2>");
+        }
+        else if(snapAlive.val().user5Alive == false) {
+          $("#resultsPlaceholder").append("<br /><h2>Darth Vader has sliced User 5</h2>");
+        }
+        else if(snapAlive.val().user6Alive == false) {
+          $("#resultsPlaceholder").append("<br /><h2>Darth Vader has sliced User 6</h2>");
+        }
+        else {
+          $("#resultsPlaceholder").append("<br /><h2>Luke Skywalker has saved everyone!</h2>");          
+        }
+      });
+
 
     });
 
