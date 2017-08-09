@@ -186,11 +186,7 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
     
 
     if (snap.numChildren() === 6) {
-      //hide wait screens
-      // $("#story_button").hide();
-      // $("#story").hide();
-      // $("#displayImage1").hide();
-      // $("#displayImage2").hide();
+      
       $("#startButton").show();
 
       // console.log(snap.child("connections/character").val());
@@ -206,7 +202,6 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
         $("#startButton").on('click', function(){
 
           $("#story_button").hide();
-          $("#story").hide();
           $("#startTimer").hide();
           $("#startButton").hide();
           $("#timeRemaining").show();
@@ -215,13 +210,6 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
           startGameObject = {startGame: startGame}
 
           database.ref("/gameStats/startGameObject/").set(startGameObject);
-
-          // started property in database, string true/false.
-          // If true, then startTimer();
-          
-
-          // database.ref().child("/connections/" + userCon).once("value", function(snappy){
-
 
 
         }); //end of #startButton
@@ -234,6 +222,12 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
           if (gameStartSnap.val().startGame == true) {
 
             startTimer();
+            $("#timeRemaining").show();
+            $("#startTimer").hide();
+            $("#startButton").hide();
+            $("#story_button").hide();
+            
+      
           }
         }); // end of gameStartSnap
         
@@ -241,14 +235,13 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
 
       
 
-
         function startTimer(){
 
 
           $("#resultsPlaceholder").hide();
           $("#pleaseWait").show();
 
-          var countDown = 10;
+          var countDown = 20;
           
           var interval = setInterval(function() { 
             countDown--;
@@ -304,30 +297,30 @@ database.ref("/connections").on("child_added", function(childSnapshot) {
         function showResults(){
           
           // SHOW RESULTS OF WHO WAS KILLED OR IF PEOPLE ARE SAFE - Then - SET NEXT TIMER:
-              $("#resultsPlaceholder").show();
+              $("#questionArea").show();
+              // $("#resultsPlaceholder").show();
               $("#pleaseWait").hide();
               
-              $("#displayImage2").hide();
+              // $("#displayImage2").hide();
 
               $("#deadArea").hide();
               $("#deadTable").hide();
               
-              $("#displayImage1").hide();
+              // $("#displayImage1").hide();
               $("#saveArea").hide();
               $("#saveTable").hide();
 
-              $("#displayImage3").hide();
-              $("#displayWaiting").hide();
+              // $("#displayImage3").hide();
+              // $("#displayWaiting").hide();
 
 
 
-          var countDown = 10;
+          var countDown = 30;
           var interval = setInterval(function() { 
             countDown--;
             $("#timeRemaining").html("<h1>Time Remaining: " + countDown + "</h1>");
 
-            $("#questionArea").show();
-
+            
            
             if (countDown == 0) {
               //startTimer();
@@ -674,20 +667,23 @@ $(document).on("click", ".button", displayStory);
 
     // });  
 
-function displayVotes() {
-  database.ref("/gameStats/voteObject/voteObject").on("value", function(snapResult) {
-    console.log(snapResult.val().user1Data);
-    $("#resultsPlaceholder").show();
-    $("#resultsPlaceholder").html("<p>This is " + userName + "'s' votes: " + snapResult.val().user1Data + "</p>" + 
-                                    "<p> This is User 2: " + snapResult.val().user2Data + "</p>" + 
-                                    "<p> This is User 3: " + snapResult.val().user3Data + "</p>" + 
-                                    "<p> This is User 4: " + snapResult.val().user4Data + "</p>" +
-                                    "<p> This is User 5: " + snapResult.val().user5Data + "</p>" +
-                                    "<p> This is User 6: " + snapResult.val().user6Data + "</p>");
+  function displayVotes() {
+    database.ref("/gameStats/voteObject/voteObject").on("value", function(snapResult) {
+      console.log(snapResult.val().user1Data);
+      $("#questionArea").hide();
+      $("#resultsPlaceholder").show();
+      $("#resultsPlaceholder").html(
+        // "<p>This is " + userName + "'s' votes: " + snapResult.val().user1Data + "</p>" + 
+        "<div><h2>Here's how many voted for User 1: " + snapResult.val().user1Data + 
+        "<br />Here's how many voted for User 2: " + snapResult.val().user2Data + 
+        "<br />Here's how many voted for User 3: " + snapResult.val().user3Data +  
+        "<br />Here's how many voted for User 4: " + snapResult.val().user4Data + 
+        "<br />Here's how many voted for User 5: " + snapResult.val().user5Data + 
+        "<br />Here's how many voted for User 6: " + snapResult.val().user6Data + "</h2></div>");
 
-  });
+    });
 
-}
+  }
 
 
 });
